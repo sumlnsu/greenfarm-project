@@ -5,7 +5,7 @@
     <string name="ic_back">back icon</string>
 
     <!--메뉴-->
-    <string name="menu_month">월별</string>
+    <string name="menu_month">야호</string>
     <string name="menu_week">주별</string>
     <string name="menu_matching">매칭</string>
 
