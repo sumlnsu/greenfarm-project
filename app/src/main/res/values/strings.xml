@@ -23,4 +23,5 @@
     <string name="signup_name_hint">이름</string>
     <string name="signup_password_hint">비밀번호</string>
     <string name="signup_password_confirm_hint">비밀번호 확인</string>
+
 </resources>

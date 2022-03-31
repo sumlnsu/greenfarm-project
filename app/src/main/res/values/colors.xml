@@ -14,6 +14,7 @@
     <color name="form_error">#F44336</color>
     <color name="bottom_navi">#DAD9D6</color>
 
+
     <!-- 로그인 -->
     <color name="login_button">#FFC107</color>
 </resources>
