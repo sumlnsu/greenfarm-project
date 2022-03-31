@@ -1,0 +1,22 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity_navgraph"
+    app:startDestination="@id/monthFragment">
+
+    <fragment
+        android:id="@+id/monthFragment"
+        android:name="com.eight.collection.ui.main.month.MonthFragment"
+        android:label="monthFragment"/>
+
+    <fragment
+        android:id="@+id/weekFragment"
+        android:name="com.eight.collection.ui.main.week.WeekFragment"
+        android:label="weekFragment"/>
+
+    <fragment
+        android:id="@+id/matchFragment"
+        android:name="com.eight.collection.ui.main.match.MatchFragment"
+        android:label="matchFragment"/>
+
+</navigation>
