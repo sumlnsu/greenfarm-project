@@ -16,7 +16,7 @@
     <string name="login_signup">회원가입</string>
 
     <!-- 회원가입 -->
-    <string name="signup">회원가입</string>
+    <string name="signup">회원가입 후 야호</string>
     <string name="signup_id_hint">아이디(이메일)</string>
     <string name="signup_email_hint">직접입력</string>
     <string name="signup_email_delimiter">\@</string>
