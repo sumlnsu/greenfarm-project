@@ -6,17 +6,17 @@
 
     <fragment
         android:id="@+id/monthFragment"
-        android:name="com.eight.collection.ui.main.month.MonthFragment"
+        android:name="com.greenfarm.ui.main.month.MonthFragment"
         android:label="monthFragment"/>
 
     <fragment
         android:id="@+id/weekFragment"
-        android:name="com.eight.collection.ui.main.week.WeekFragment"
+        android:name="com.greenfarm.ui.main.week.WeekFragment"
         android:label="weekFragment"/>
 
     <fragment
         android:id="@+id/matchFragment"
-        android:name="com.eight.collection.ui.main.match.MatchFragment"
+        android:name="com.greenfarm.ui.main.match.MatchFragment"
         android:label="matchFragment"/>
 
 </navigation>

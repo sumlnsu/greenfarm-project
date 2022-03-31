@@ -2,19 +2,19 @@
     <item
         android:id="@+id/monthFragment"
         android:enabled="true"
-        android:title="@string/menu_month"
+        android:title="match"
         android:icon="@drawable/selector_navi_month"/>
 
     <item
         android:id="@+id/matchFragment"
         android:enabled="true"
-        android:title="@string/menu_matching"
+        android:title="match"
         android:icon="@drawable/selector_navi_match"/>
 
     <item
         android:id="@+id/weekFragment"
         android:enabled="true"
-        android:title="@string/menu_week"
+        android:title="match"
         android:icon="@drawable/selector_navi_week"/>
 
 </menu>
