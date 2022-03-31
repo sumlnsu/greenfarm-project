@@ -1,16 +1,11 @@
 <resources>
-    <string name="app_name">COLLECTION</string>
+    <string name="app_name">GreenFarm</string>
     <!--공통-->
     <string name="img_app_logo">logo image</string>
     <string name="ic_back">back icon</string>
 
-    <!--메뉴-->
-    <string name="menu_month">월별</string>
-    <string name="menu_week">주별</string>
-    <string name="menu_matching">매칭</string>
-
     <!--에러처리-->
-    <string name="default_fail">네트워크연결이 원활하지 않습니다</string>
+    <string name="default_fail">네트워크 연결이 원활하지 않습니다</string>
 
     <!-- 로그인 -->
     <string name="login">로그인</string>
