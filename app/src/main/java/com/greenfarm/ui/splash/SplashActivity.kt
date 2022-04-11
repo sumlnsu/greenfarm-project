@@ -1,5 +1,6 @@
 package com.greenfarm.ui.splash
 
+import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import com.greenfarm.data.remote.auth.AuthService
@@ -8,15 +9,17 @@ import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.login.LoginActivity
 import com.greenfarm.ui.main.MainActivity
 
-class SplashActivity: BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate), SplashView {
+class SplashActivity: BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
 
     override fun initAfterBinding() {
         Handler(Looper.getMainLooper()).postDelayed({
-            autoLogin()
+            val  intent= Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }, 2000)
     }
 
-    private fun autoLogin() {
+   /* private fun autoLogin() {
         AuthService.autoLogin(this)
     }
 
@@ -30,5 +33,5 @@ class SplashActivity: BaseActivity<ActivitySplashBinding>(ActivitySplashBinding:
 
     override fun onAutoLoginFailure(code: Int, message: String) {
         startActivityWithClear(LoginActivity::class.java)
-    }
+    }*/
 }
