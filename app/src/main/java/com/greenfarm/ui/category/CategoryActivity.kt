@@ -10,11 +10,12 @@ import com.greenfarm.databinding.ActivityMainBinding
 import com.greenfarm.ui.BaseActivity
 
 class CategoryActivity: BaseActivity<ActivityCategoryBinding>(ActivityCategoryBinding::inflate) {
-    private lateinit var navHostFragment: NavHostFragment
 
 
     override fun initAfterBinding() {
-
+        binding.categoryBackIc.setOnClickListener{
+            finish()
+        }
     }
 
 }
