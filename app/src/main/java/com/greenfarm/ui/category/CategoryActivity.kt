@@ -16,4 +16,5 @@ class CategoryActivity: BaseActivity<ActivityCategoryBinding>(ActivityCategoryBi
     override fun initAfterBinding() {
 
     }
+
 }
