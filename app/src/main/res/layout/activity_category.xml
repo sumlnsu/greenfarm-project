@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.CategoryActivity">
+
+    <ImageView
+        android:id="@+id/category_back_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_greenfarm_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/category_firststep_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_bold"
+        android:text="1 STEP"
+        android:textColor="@color/dark_green"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/category_back_ic"
+        app:layout_constraintTop_toTopOf="@id/category_back_ic"
+        app:layout_constraintBottom_toBottomOf="@id/category_back_ic"
+        android:layout_marginStart="5dp"
+        />
+
+    <TextView
+        android:id="@+id/category_text_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_bold"
+        android:text="작물을 선택해주세요."
+        android:textColor="@color/dark_green"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/category_bean_bt"
+        app:layout_constraintTop_toBottomOf="@id/category_firststep_tv"
+        android:layout_marginTop="98dp"
+        />
+
+    <ImageView
+        android:id="@+id/category_bean_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bt_greenfarm_green_category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category_text_tv"
+        android:layout_marginTop="50dp"
+        />
+
+    <ImageView
+        android:id="@+id/category_redbean_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bt_greenfarm_white_category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category_bean_bt"
+        android:layout_marginTop="54dp"
+        />
+
+    <ImageView
+        android:id="@+id/category_sesame_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bt_greenfarm_green_category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category_redbean_bt"
+        android:layout_marginTop="54dp"
+        />
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

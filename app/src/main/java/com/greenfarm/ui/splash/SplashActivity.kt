@@ -3,17 +3,16 @@ package com.greenfarm.ui.splash
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import com.greenfarm.data.remote.auth.AuthService
 import com.greenfarm.databinding.ActivitySplashBinding
 import com.greenfarm.ui.BaseActivity
-import com.greenfarm.ui.login.LoginActivity
+import com.greenfarm.ui.main.CategoryActivity
 import com.greenfarm.ui.main.MainActivity
 
 class SplashActivity: BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
 
     override fun initAfterBinding() {
         Handler(Looper.getMainLooper()).postDelayed({
-            val  intent= Intent(this, LoginActivity::class.java)
+            val  intent= Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }, 2000)

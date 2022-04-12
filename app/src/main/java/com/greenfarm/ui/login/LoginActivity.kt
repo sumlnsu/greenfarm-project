@@ -7,7 +7,7 @@ import com.greenfarm.data.remote.auth.Auth
 import com.greenfarm.data.remote.auth.AuthService
 import com.greenfarm.databinding.ActivityLoginBinding
 import com.greenfarm.ui.BaseActivity
-import com.greenfarm.ui.main.MainActivity
+import com.greenfarm.ui.main.CategoryActivity
 import com.greenfarm.ui.signup.SignUpActivity
 import com.greenfarm.utils.saveJwt
 
@@ -53,7 +53,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         binding.loginLoadingPb.visibility = View.GONE
 
         saveJwt(auth.jwt)
-        startActivityWithClear(MainActivity::class.java)
+        startActivityWithClear(CategoryActivity::class.java)
     }
 
     override fun onLoginFailure(code: Int, message: String) {

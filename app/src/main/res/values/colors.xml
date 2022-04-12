@@ -17,4 +17,15 @@
 
     <!-- 로그인 -->
     <color name="login_button">#FFC107</color>
+
+
+    <!-- GreenFarm -->
+    <color name="royal_blue">#3452FF</color>
+    <color name="royal_green">#3FFF97</color>
+    <color name="emerald">#80FFBA</color>
+    <color name="dark_green">#5CC28A</color>
+    <color name="grey_green">#AED7C1</color>
+    <color name="error_red">#B82F2F</color>
+    <color name="dark_taupe">#7C6350</color>
+
 </resources>
