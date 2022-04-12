@@ -1,5 +1,6 @@
 package com.greenfarm.ui.main
 
+import android.content.Intent
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -13,9 +14,10 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
 
 
     override fun initAfterBinding() {
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
-        val navController: NavController = navHostFragment.findNavController()
-
+        binding.mainSearchBtIv.setOnClickListener{
+            val  intent= Intent(this, CategoryActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }
