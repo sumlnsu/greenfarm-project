@@ -1,11 +1,6 @@
 package com.greenfarm.ui.main
 
 import android.content.Intent
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.greenfarm.R
 import com.greenfarm.databinding.ActivityMainBinding
 import com.greenfarm.ui.BaseActivity
 
@@ -14,7 +9,7 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
 
     override fun initAfterBinding() {
         binding.mainSearchBtIv.setOnClickListener{
-            val  intent= Intent(this, CategoryActivity::class.java)
+            val  intent= Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
 
