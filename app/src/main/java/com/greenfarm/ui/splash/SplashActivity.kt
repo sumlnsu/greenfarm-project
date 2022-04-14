@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import com.greenfarm.databinding.ActivitySplashBinding
 import com.greenfarm.ui.BaseActivity
+import com.greenfarm.ui.login.LoginActivity
 import com.greenfarm.ui.main.CategoryActivity
 import com.greenfarm.ui.main.MainActivity
 
@@ -12,7 +13,7 @@ class SplashActivity: BaseActivity<ActivitySplashBinding>(ActivitySplashBinding:
 
     override fun initAfterBinding() {
         Handler(Looper.getMainLooper()).postDelayed({
-            val  intent= Intent(this, MainActivity::class.java)
+            val  intent= Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }, 2000)
