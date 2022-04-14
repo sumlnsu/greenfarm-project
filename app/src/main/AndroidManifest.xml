@@ -36,13 +36,18 @@
 
 
         <activity
-            android:name=".ui.main.CategoryActivity"
+            android:name=".ui.main.SearchActivity"
             android:exported="true">
         </activity>
 
 
         <activity
             android:name=".ui.main.MainActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".ui.main.HistoryActivity"
             android:exported="true">
         </activity>
 
