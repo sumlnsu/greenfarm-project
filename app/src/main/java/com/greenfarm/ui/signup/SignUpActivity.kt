@@ -11,6 +11,9 @@ class SignUpActivity: BaseActivity<ActivitySignupBinding>(ActivitySignupBinding:
 
     override fun initAfterBinding() {
 
+        binding.signUpBack.setOnClickListener{
+            finish()
+        }
     }
 
     override fun onClick(v: View?) {
