@@ -6,7 +6,6 @@ import android.os.Looper
 import com.greenfarm.databinding.ActivitySplashBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.login.LoginActivity
-import com.greenfarm.ui.main.CategoryActivity
 import com.greenfarm.ui.main.MainActivity
 
 class SplashActivity: BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {

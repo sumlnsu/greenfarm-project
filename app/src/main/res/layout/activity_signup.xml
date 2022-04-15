@@ -47,10 +47,11 @@
         android:background="@null"
         android:autofillHints="@null"
         android:hint="@string/signup_hint"
-        android:textColorHint="@color/dark_green"
+        android:textColorHint="@color/grey_green"
         android:layout_marginStart="34dp"
         android:layout_marginEnd="34dp"
         android:textSize="14sp"
+        android:textColor="@color/dark_taupe"
         app:layout_constraintTop_toBottomOf="@id/sign_up_id_tv"
         android:layout_marginTop="7dp"
         />
@@ -98,10 +99,11 @@
         android:background="@null"
         android:autofillHints="@null"
         android:hint="@string/signup_hint"
-        android:textColorHint="@color/dark_green"
+        android:textColorHint="@color/grey_green"
         android:layout_marginStart="34dp"
         android:layout_marginEnd="34dp"
         android:textSize="14sp"
+        android:textColor="@color/dark_taupe"
         app:layout_constraintTop_toBottomOf="@id/sign_up_password_tv"
         android:layout_marginTop="7dp"
         />
@@ -142,6 +144,7 @@
         app:layout_constraintTop_toBottomOf="@id/sign_up_password_error"
         app:layout_constraintStart_toStartOf="parent"
         />
+
     <EditText
         android:id="@+id/sign_up_password_confirm_et"
         android:layout_width="match_parent"
@@ -149,13 +152,15 @@
         android:background="@null"
         android:autofillHints="@null"
         android:hint="@string/signup_hint"
-        android:textColorHint="@color/dark_green"
+        android:textColorHint="@color/grey_green"
+        android:textColor="@color/dark_taupe"
         android:layout_marginStart="34dp"
         android:layout_marginEnd="34dp"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/sign_up_password_confirm_tv"
         android:layout_marginTop="7dp"
         />
+
     <View
         android:id="@+id/sign_up_password_confirm_underscore"
         android:layout_width="match_parent"
@@ -192,6 +197,7 @@
         app:layout_constraintTop_toBottomOf="@id/sign_up_password_confirm_error"
         app:layout_constraintStart_toStartOf="parent"
         />
+
     <EditText
         android:id="@+id/sign_up_farm_et"
         android:layout_width="match_parent"
@@ -199,7 +205,8 @@
         android:background="@null"
         android:autofillHints="@null"
         android:hint="@string/farm_hint"
-        android:textColorHint="@color/dark_green"
+        android:textColorHint="@color/grey_green"
+        android:textColor="@color/dark_taupe"
         android:layout_marginStart="34dp"
         android:layout_marginEnd="34dp"
         android:textSize="14sp"

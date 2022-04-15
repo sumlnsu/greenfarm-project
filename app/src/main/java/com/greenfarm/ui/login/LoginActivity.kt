@@ -7,7 +7,6 @@ import com.greenfarm.data.remote.auth.Auth
 import com.greenfarm.data.remote.auth.AuthService
 import com.greenfarm.databinding.ActivityLoginBinding
 import com.greenfarm.ui.BaseActivity
-import com.greenfarm.ui.main.CategoryActivity
 import com.greenfarm.ui.main.MainActivity
 import com.greenfarm.ui.signup.SignUpActivity
 import com.greenfarm.utils.saveJwt
