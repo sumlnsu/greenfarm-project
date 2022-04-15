@@ -23,11 +23,23 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
         when(v) {
             binding.loginSignUpBt -> startNextActivity(SignUpActivity::class.java)
-            binding.loginBt -> login()
+            binding.loginBt -> startNextActivity(MainActivity::class.java)
         }
     }
 
-    private fun login(){
+    override fun onLoginLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLoginSuccess(auth: Auth) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLoginFailure(code: Int, message: String) {
+        TODO("Not yet implemented")
+    }
+
+    /*private fun login(){
         if(binding.loginId.text.toString().isEmpty()){
             binding.loginIdError.visibility = View.VISIBLE
             return
@@ -66,6 +78,5 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                 binding.loginPasswordError.visibility = View.VISIBLE
             }
         }
-
-    }
+    }*/
 }
