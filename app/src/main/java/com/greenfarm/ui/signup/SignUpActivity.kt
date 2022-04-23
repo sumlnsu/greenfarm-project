@@ -11,28 +11,35 @@ class SignUpActivity: BaseActivity<ActivitySignupBinding>(ActivitySignupBinding:
 
     override fun initAfterBinding() {
 
+        // 왼쪽 상단 Back Zone Click Event (Finish Activity)
         binding.signUpBack.setOnClickListener{
+            finish()
+        }
+        binding.signUpBackTv.setOnClickListener{
+            finish()
+        }
+
+        // 회원가입 버튼 클릭시 Event (지금은 Finish지만 신현이한테 명세서 받고, 회원가입 기능 추가)
+        binding.signUpBtn.setOnClickListener{
             finish()
         }
     }
 
     override fun onClick(v: View?) {
-        if(v == null) return
 
-        when(v) {
-        }
     }
 
+
     override fun onSignUpLoading() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onSignUpSuccess() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onSignUpFailure(code: Int, message: String) {
-        TODO("Not yet implemented")
+
     }
 
 }

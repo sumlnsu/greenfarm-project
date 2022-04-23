@@ -22,7 +22,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
+            />
+
+        <TextView
+            android:id="@+id/category_first_tv"
+            android:layout_width="8dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_bold"
+            android:text="1"
+            android:textColor="@color/dark_green"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/category_back_ic"
+            app:layout_constraintTop_toTopOf="@id/category_back_ic"
+            app:layout_constraintBottom_toBottomOf="@id/category_back_ic"
+            android:layout_marginStart="5dp"
             />
 
         <TextView
@@ -30,11 +45,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/suit_bold"
-            android:text="1 STEP"
+            android:text="STEP"
             android:textColor="@color/dark_green"
             android:textStyle="bold"
             android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/category_back_ic"
+            app:layout_constraintStart_toEndOf="@id/category_first_tv"
             app:layout_constraintTop_toTopOf="@id/category_back_ic"
             app:layout_constraintBottom_toBottomOf="@id/category_back_ic"
             android:layout_marginStart="5dp"
@@ -186,7 +201,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
+            />
+
+        <TextView
+            android:id="@+id/upload_second_tv"
+            android:layout_width="8dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_bold"
+            android:text="2"
+            android:textColor="@color/dark_green"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/upload_back_ic"
+            app:layout_constraintTop_toTopOf="@id/upload_back_ic"
+            app:layout_constraintBottom_toBottomOf="@id/upload_back_ic"
+            android:layout_marginStart="5dp"
             />
 
         <TextView
@@ -194,11 +224,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/suit_bold"
-            android:text="2 STEP"
+            android:text="STEP"
             android:textColor="@color/dark_green"
             android:textStyle="bold"
             android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/upload_back_ic"
+            app:layout_constraintStart_toEndOf="@id/upload_second_tv"
             app:layout_constraintTop_toTopOf="@id/upload_back_ic"
             app:layout_constraintBottom_toBottomOf="@id/upload_back_ic"
             android:layout_marginStart="5dp"

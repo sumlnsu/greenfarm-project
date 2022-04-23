@@ -22,6 +22,18 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
             binding.searchCategoryPartView.visibility = View.GONE
             binding.searchUploadPartView.visibility = View.VISIBLE
         }
+
+        binding.categoryRedbeanBt.setOnClickListener{
+            binding.searchCategoryPartView.visibility = View.GONE
+            binding.searchUploadPartView.visibility = View.VISIBLE
+        }
+
+        binding.categorySesameBt.setOnClickListener{
+            binding.searchCategoryPartView.visibility = View.GONE
+            binding.searchUploadPartView.visibility = View.VISIBLE
+        }
+
+
         binding.uploadBackIc.setOnClickListener{
             binding.searchUploadPartView.visibility = View.GONE
             binding.searchCategoryPartView.visibility = View.VISIBLE
