@@ -3,6 +3,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        flatDir {
+            dirs 'lib'
+        }
     }
     ext{
         kotlin_version = "1.4.32"
