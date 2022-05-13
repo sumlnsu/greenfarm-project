@@ -46,26 +46,32 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        cameraButton = findViewById(R.id.cameraButton);
-        detectButton = findViewById(R.id.detectButton);
+//        cameraButton = findViewById(R.id.cameraButton);
+//        detectButton = findViewById(R.id.detectButton);
         imageView = findViewById(R.id.imageView);
 
 //        cameraButton.setOnClickListener(v -> startActivity(new Intent(TestActivity.this, DetectorActivity.class)));
 
-        detectButton.setOnClickListener(v -> {
-            Handler handler = new Handler();
+//        detectButton.setOnClickListener(v -> {
+//            Handler handler = new Handler();
+//             //코드 실행 전에 시간 받아오기
+//            new Thread(() -> {
+////                long beforeTime = System.currentTimeMillis();
+//                final List<Classifier.Recognition> results = detector.recognizeImage(cropBitmap);
+//                handler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        handleResult(cropBitmap, results);
+//                    }
+//                });
+////                long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
+////                long secDiffTime = (afterTime - beforeTime)/1000; //두 시간에 차 계산
+////                Log.d("시간차이(m) : ", String.valueOf(secDiffTime));
+////                Log.d("test", "test");
+//            }).start();
+//        });
 
-            new Thread(() -> {
-                final List<Classifier.Recognition> results = detector.recognizeImage(cropBitmap);
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        handleResult(cropBitmap, results);
-                    }
-                });
-            }).start();
-        });
-        this.sourceBitmap = Utils.getBitmapFromAsset(TestActivity.this, "kite.jpg");
+        this.sourceBitmap = Utils.getBitmapFromAsset(TestActivity.this, getIntent().getStringExtra("image"));
 
         this.cropBitmap = Utils.processBitmap(sourceBitmap, TF_OD_API_INPUT_SIZE);
 
@@ -74,6 +80,18 @@ public class TestActivity extends AppCompatActivity {
         initBox();
         ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
+
+        Handler handler = new Handler();
+        //코드 실행 전에 시간 받아오기
+        new Thread(() -> {
+            final List<Classifier.Recognition> results = detector.recognizeImage(cropBitmap);
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    handleResult(cropBitmap, results);
+                }
+            });
+        }).start();
 
         System.err.println(Double.parseDouble(configurationInfo.getGlEsVersion()));
         System.err.println(configurationInfo.reqGlEsVersion >= 0x30000);
@@ -108,7 +126,7 @@ public class TestActivity extends AppCompatActivity {
     private Bitmap sourceBitmap;
     private Bitmap cropBitmap;
 
-    private Button cameraButton, detectButton;
+//    private Button cameraButton, detectButton;
     private ImageView imageView;
 
     private void initBox() {
@@ -190,7 +208,7 @@ public class TestActivity extends AppCompatActivity {
                         !TextUtils.isEmpty(result.getTitle())
                                 ? String.format("%s %.2f", result.getTitle(), (100 * result.getConfidence()))
                                 : String.format("%.2f", (100 * result.getConfidence()));
-                canvas.drawText(labelString, location.left,location.top,textPaint);
+                canvas.drawText(labelString, location.left,location.bottom,textPaint);
 //                cropToFrameTransform.mapRect(location);
 //
 //                result.setLocation(location);
@@ -201,5 +219,7 @@ public class TestActivity extends AppCompatActivity {
 //       tracker.trackResults(mappedRecognitions, 1);
 //        trackingOverlay.postInvalidate();
         imageView.setImageBitmap(bitmap);
+        Log.d("end","end");
+
     }
 }

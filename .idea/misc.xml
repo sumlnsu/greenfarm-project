@@ -3,14 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/GREENFARM/app/src/main/res/drawable/radius.xml" value="0.3155" />
-        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/GREENFARM/app/src/main/res/layout/activity_category.xml" value="0.33" />
-        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/GREENFARM/app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/GREENFARM/app/src/main/res/layout/activity_main.xml" value="0.3494791666666667" />
-        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/GREENFARM/app/src/main/res/layout/activity_signup.xml" value="0.33" />
-        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/GREENFARM/app/src/main/res/layout/activity_splash.xml" value="0.18840579710144928" />
-        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/GREENFARM/app/src/main/res/layout/activity_test.xml" value="0.30625" />
-        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/GREENFARM/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.231" />
+        <entry key="..\:/Users/croww/AndroidStudioProjects/GreenFarm2.2/app/src/main/res/layout/activity_login.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/croww/AndroidStudioProjects/GreenFarm2.2/app/src/main/res/layout/activity_signup.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/croww/AndroidStudioProjects/GreenFarm2.2/app/src/main/res/layout/activity_splash.xml" value="0.1" />
+        <entry key="..\:/Users/croww/AndroidStudioProjects/GreenFarm2.2/app/src/main/res/layout/activity_test.xml" value="0.1" />
         <entry key="..\:/Users/gypig/Documents/COLLECTION/app/src/main/res/drawable/selector_navi_home.xml" value="0.17708333333333334" />
         <entry key="..\:/Users/gypig/Documents/COLLECTION/app/src/main/res/drawable/selector_navi_match.xml" value="0.17708333333333334" />
         <entry key="..\:/Users/gypig/Documents/COLLECTION/app/src/main/res/drawable/selector_navi_mypage.xml" value="0.17708333333333334" />
@@ -26,13 +22,11 @@
         <entry key="..\:/Users/gypig/Documents/COLLECTION/app/src/main/res/menu/navi_menu.xml" value="0.12" />
         <entry key="..\:/Users/gypig/Documents/COLLECTION/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/gypig/Documents/COLLECTION/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_category.xml" value="0.22292388916015632" />
-        <entry key="app/src/main/res/layout/activity_history.xml" value="0.2790671894518725" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.20377258300781248" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.2421875" />
-        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/fragment_match.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/fragment_month.xml" value="0.10989583333333333" />
         <entry key="app/src/main/res/layout/fragment_week.xml" value="0.10989583333333333" />
