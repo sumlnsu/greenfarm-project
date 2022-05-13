@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="MissingConstraints"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/category_back_ic"
@@ -191,7 +191,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="MissingConstraints"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/upload_back_ic"
@@ -249,6 +249,30 @@
             android:layout_marginTop="100dp"
             />
 
+
+        <ImageView
+            android:id="@+id/upload_image_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_greenfarm_image_upload"
+            app:layout_constraintTop_toTopOf="@id/upload_image_bg_iv"
+            app:layout_constraintStart_toStartOf="@id/upload_image_bg_iv"
+            app:layout_constraintEnd_toEndOf="@id/upload_image_bg_iv"
+            app:layout_constraintBottom_toBottomOf="@id/upload_image_bg_iv"
+            />
+
+
+        <ImageView
+            android:id="@+id/upload_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="@id/upload_image_bg_iv"
+            app:layout_constraintEnd_toEndOf="@id/upload_image_bg_iv"
+            app:layout_constraintTop_toTopOf="@id/upload_image_bg_iv"
+            app:layout_constraintBottom_toBottomOf="@id/upload_image_bg_iv"
+            />
+
         <ImageView
             android:id="@+id/upload_image_bg_iv"
             android:layout_width="wrap_content"
@@ -260,16 +284,6 @@
             app:layout_constraintTop_toBottomOf="@+id/upload_text_tv"
             />
 
-        <ImageView
-            android:id="@+id/upload_image_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_greenfarm_image_upload"
-            app:layout_constraintTop_toTopOf="@id/upload_image_bg_iv"
-            app:layout_constraintStart_toStartOf="@id/upload_image_bg_iv"
-            app:layout_constraintEnd_toEndOf="@id/upload_image_bg_iv"
-            app:layout_constraintBottom_toBottomOf="@id/upload_image_bg_iv"
-            />
 
         <ImageView
             android:id="@+id/upload_camera_bg_iv"
