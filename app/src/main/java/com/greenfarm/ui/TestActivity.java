@@ -65,7 +65,7 @@ public class TestActivity extends AppCompatActivity {
                 });
             }).start();
         });
-        this.sourceBitmap = Utils.getBitmapFromAsset(TestActivity.this, "kite.jpg");
+        this.sourceBitmap = Utils.getBitmapFromAsset(TestActivity.this, getIntent().getStringExtra("image"));
 
         this.cropBitmap = Utils.processBitmap(sourceBitmap, TF_OD_API_INPUT_SIZE);
 
