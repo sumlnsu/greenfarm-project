@@ -5,6 +5,7 @@ import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -24,14 +25,12 @@ import com.greenfarm.databinding.ActivityMainBinding
 import com.greenfarm.databinding.ActivitySearchBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.TestActivity
-import java.io.File
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding::inflate) {
-    lateinit var currentPhotoPath : String
+    var filepath : String? = null
 
     override fun initAfterBinding() {
         // 뒤로가기
@@ -86,6 +85,7 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
         // 병해충 검출 시작 클릭
         binding.uploadStartTv.setOnClickListener{
             val intent= Intent(this, TestActivity::class.java)
+            intent.putExtra("image",filepath)
             startActivity(intent)
         }
 
@@ -152,9 +152,23 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
             storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
+            filepath = absolutePath
         }
     }
+
+
+    // Gallery
+
+    private fun openGalleryForImage(){
+        var intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        intent.putExtra(Intent.EXTRA_INITIAL_INTENTS, true)
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_OPEN_DOCUMENT
+
+        startActivityForResult(intent, 2)
+    }
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -164,7 +178,7 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
                 if(requestCode == 1 && resultCode == Activity.RESULT_OK){
 
                     // 카메라로부터 받은 데이터가 있을경우에만
-                    val file = File(currentPhotoPath)
+                    val file = File(filepath)
                     if (Build.VERSION.SDK_INT < 28) {
                         val bitmap = MediaStore.Images.Media
                             .getBitmap(contentResolver, Uri.fromFile(file))  //Deprecated
@@ -181,24 +195,44 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
 
             2 -> {
                 if (resultCode == Activity.RESULT_OK && requestCode == 2){
+                    data?.data?.let { uri ->
+                        val imageUri : Uri? = data?.data
+                        if (imageUri != null){
+                            contentResolver.takePersistableUriPermission(imageUri,Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+                            saveBitmapAsPNGFile(bitmap)
+                        }
+                    }
                     binding.uploadImage.setImageURI(data?.data) // handle chosen image
                 }
             }
         }
     }
 
+    private fun newPngFileName() : String {
+        val sdf = SimpleDateFormat("yyyyMMdd__HHmmss")
+        val filename = sdf.format(System.currentTimeMillis())
+        return "${filename}.png"
+    }
 
+    private fun saveBitmapAsPNGFile(bitmap: Bitmap){
+        val path = File(filesDir, "image")
+        if(!path.exists()){
+            path.mkdirs()
+        }
+        val photoName = newPngFileName()
+        val file = File(path,photoName)
+        var imageFile : OutputStream? = null
+        try {
+            file.createNewFile()
+            imageFile = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 60, imageFile)
+            imageFile.close()
 
+            filepath = file.absolutePath.toString()
+        }catch (e: Exception){
 
-    // Gallery
-
-    private fun openGalleryForImage(){
-        var intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-        intent.putExtra(Intent.EXTRA_INITIAL_INTENTS, true)
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_OPEN_DOCUMENT
-
-        startActivityForResult(intent, 2)
+        }
     }
 
 
