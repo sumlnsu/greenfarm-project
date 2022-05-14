@@ -45,14 +45,14 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
+/*
         cameraButton = findViewById(R.id.cameraButton);
-        detectButton = findViewById(R.id.detectButton);
+        detectButton = findViewById(R.id.detectButton);*/
         imageView = findViewById(R.id.imageView);
 
 //        cameraButton.setOnClickListener(v -> startActivity(new Intent(TestActivity.this, DetectorActivity.class)));
 
-        detectButton.setOnClickListener(v -> {
+        /*detectButton.setOnClickListener(v -> {
             Handler handler = new Handler();
 
             new Thread(() -> {
@@ -64,16 +64,30 @@ public class TestActivity extends AppCompatActivity {
                     }
                 });
             }).start();
-        });
-        this.sourceBitmap = Utils.getBitmapFromAsset(TestActivity.this, "kite.jpg");
+        });*/
+        this.sourceBitmap = Utils.getBitmapFromAsset(TestActivity.this, getIntent().getStringExtra("image"));
 
         this.cropBitmap = Utils.processBitmap(sourceBitmap, TF_OD_API_INPUT_SIZE);
 
         this.imageView.setImageBitmap(cropBitmap);
 
+
+
         initBox();
         ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
+
+        Handler handler = new Handler();
+
+        new Thread(() -> {
+            final List<Classifier.Recognition> results = detector.recognizeImage(cropBitmap);
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    handleResult(cropBitmap, results);
+                }
+            });
+        }).start();
 
         System.err.println(Double.parseDouble(configurationInfo.getGlEsVersion()));
         System.err.println(configurationInfo.reqGlEsVersion >= 0x30000);

@@ -70,18 +70,13 @@ public class Utils {
 //    }
 
     public static Bitmap getBitmapFromAsset(Context context, String filePath) {
-        AssetManager assetManager = context.getAssets();
+        /*AssetManager assetManager = context.getAssets();
 
-        InputStream istr;
+        InputStream istr;*/
         Bitmap bitmap = null;
-        try {
-            istr = assetManager.open(filePath);
-            bitmap = BitmapFactory.decodeStream(istr);
+        /*istr = assetManager.open(filePath);*/
+        bitmap = BitmapFactory.decodeFile(filePath);
 //            return bitmap.copy(Bitmap.Config.ARGB_8888,true);
-        } catch (IOException e) {
-            // handle exception
-            Log.e("getBitmapFromAsset", "getBitmapFromAsset: " + e.getMessage());
-        }
 
         return bitmap;
     }
