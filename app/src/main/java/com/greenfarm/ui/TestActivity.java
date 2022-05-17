@@ -38,8 +38,10 @@ import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
 
-    public static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.2f;
+    public static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.5f;
+    private static String TF_OD_API_MODEL_FILE = "best-fp16-sesame-s.tflite";
 
+    private static String TF_OD_API_LABELS_FILE = "file:///android_asset/ctest.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,16 @@ public class TestActivity extends AppCompatActivity {
                 });
             }).start();
         });*/
+
+        if(getIntent().getStringExtra("class").equals("sesame")){
+            TF_OD_API_MODEL_FILE = "best-fp16-sesame-s.tflite";
+            TF_OD_API_LABELS_FILE = "file:///android_asset/ctest.txt";
+        }else if(getIntent().getStringExtra("class").equals("red-bean")){
+            TF_OD_API_MODEL_FILE = "best-fp16.tflite";
+            TF_OD_API_LABELS_FILE = "file:///android_asset/btest.txt";
+        }else if(getIntent().getStringExtra("class").equals("bean")){
+            // 모델 필요
+        }
         this.sourceBitmap = Utils.getBitmapFromAsset(TestActivity.this, getIntent().getStringExtra("image"));
 
         this.cropBitmap = Utils.processBitmap(sourceBitmap, TF_OD_API_INPUT_SIZE);
@@ -100,9 +112,6 @@ public class TestActivity extends AppCompatActivity {
 
     private static final boolean TF_OD_API_IS_QUANTIZED = false;
 
-    private static final String TF_OD_API_MODEL_FILE = "best-fp16.tflite";
-
-    private static final String TF_OD_API_LABELS_FILE = "file:///android_asset/btest.txt";
 
 
     // Minimum detection confidence to track a detection.
@@ -138,7 +147,6 @@ public class TestActivity extends AppCompatActivity {
         frameToCropTransform.invert(cropToFrameTransform);
 
         tracker = new MultiBoxTracker(this);
-        Log.d("box","initbox");
         trackingOverlay = findViewById(R.id.tracking_overlay);
         trackingOverlay.addCallback(
                 canvas -> tracker.draw(canvas));
@@ -146,7 +154,6 @@ public class TestActivity extends AppCompatActivity {
         tracker.setFrameConfiguration(TF_OD_API_INPUT_SIZE, TF_OD_API_INPUT_SIZE, sensorOrientation);
 
         try {
-            Log.d("box","initbox");
             detector =
                     YoloV5Classifier.create(
                             getAssets(),
@@ -169,8 +176,7 @@ public class TestActivity extends AppCompatActivity {
         final Canvas canvas = new Canvas(bitmap);
         final Paint paint = new Paint();
         final Paint textPaint = new Paint();
-//        Log.d("result",results.get(0).toString());
-//        paint.setColor(Color.RED);
+
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(1.0f);
 
@@ -180,10 +186,7 @@ public class TestActivity extends AppCompatActivity {
 
         textPaint.setAntiAlias(false);
         textPaint.setAlpha(255);
-        final List<Classifier.Recognition> mappedRecognitions =
-                new LinkedList<Classifier.Recognition>();
 
-//        for (final Classifier.Recognition result : results) {
         for(int i =0 ;i<results.size();i++){
             final Classifier.Recognition result = results.get(i);
             final RectF location = result.getLocation();
