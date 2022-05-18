@@ -33,7 +33,8 @@ import java.util.*
 
 class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding::inflate) {
     var filepath : String? = null
-
+    var isImageUploaded = false
+    var className : String? = null
     override fun initAfterBinding() {
         // 뒤로가기
         binding.categoryBackIc.setOnClickListener{
@@ -44,18 +45,21 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
         binding.categoryBeanBt.setOnClickListener{
             binding.searchCategoryPartView.visibility = View.GONE
             binding.searchUploadPartView.visibility = View.VISIBLE
+            className = "bean"
         }
 
         // 팥 검출
         binding.categoryRedbeanBt.setOnClickListener{
             binding.searchCategoryPartView.visibility = View.GONE
             binding.searchUploadPartView.visibility = View.VISIBLE
+            className = "red-bean"
         }
 
         // 참깨 검출
         binding.categorySesameBt.setOnClickListener{
             binding.searchCategoryPartView.visibility = View.GONE
             binding.searchUploadPartView.visibility = View.VISIBLE
+            className = "sesame"
         }
 
 
@@ -86,9 +90,14 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
 
         // 병해충 검출 시작 클릭
         binding.uploadStartTv.setOnClickListener{
-            val intent= Intent(this, TestActivity::class.java)
-            intent.putExtra("image",filepath)
-            startActivity(intent)
+            Log.d("start","start")
+            if(isImageUploaded){
+                val intent= Intent(this, TestActivity::class.java)
+                intent.putExtra("image",filepath)
+                intent.putExtra("class",className)
+                startActivity(intent)
+            }
+            Log.d("end","end")
         }
     }
 
@@ -140,6 +149,7 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 takePictureIntent.putExtra("crop",true)
                 startActivityForResult(takePictureIntent, 1)
+                isImageUploaded = true
             }
         }
     }
@@ -168,6 +178,7 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
         intent.action = Intent.ACTION_OPEN_DOCUMENT
 
         startActivityForResult(intent, 2)
+        isImageUploaded = true
     }
 
 
