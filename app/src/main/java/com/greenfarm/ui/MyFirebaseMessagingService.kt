@@ -78,8 +78,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // 알림에 대한 UI 정보와 작업을 지정한다.
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher) // 아이콘 설정
-            .setContentTitle(remoteMessage.data["body"].toString()) // 제목
-            .setContentText(remoteMessage.data["title"].toString()) // 메시지 내용
+            .setContentTitle(remoteMessage.data["title"].toString()) // 제목
+            .setContentText(remoteMessage.data["message"].toString()) // 메시지 내용
             .setAutoCancel(true)
 //            .setSound(soundUri) // 알림 소리
             .setContentIntent(pendingIntent) // 알림 실행 시 Intent

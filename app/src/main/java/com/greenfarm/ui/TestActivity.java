@@ -27,9 +27,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.greenfarm.R;
+import com.greenfarm.data.entities.NotificationBody;
 import com.greenfarm.ui.main.SearchActivity;
 
 //import org.tensorflow.lite.examples.detection.DetectorActivity;
+import com.greenfarm.data.entities.FirebaseViewModel;
 import org.tensorflow.lite.examples.detection.customview.OverlayView;
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
 import org.tensorflow.lite.examples.detection.env.Logger;
@@ -256,6 +258,9 @@ public class TestActivity extends AppCompatActivity {
                 for(int i = 0; i<user.length;i++){
                     Log.d("ds",user[i]+snapshot.child(user[i]).getValue(String.class));
                     tokens.add(snapshot.child(user[i]).getValue(String.class));
+                    FirebaseViewModel firebaseViewModel = new FirebaseViewModel(getApplication());
+                    // fcm서버에 해당 토큰에 대해 알림 요청
+                    firebaseViewModel.sendNotification(tokens.get(i), "1","1", "1");
                 }
                 Log.d("tokens",tokens.toString());
             }
@@ -266,7 +271,5 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-
-        // fcm서버에 해당 토큰에 대해 알림 요청
     }
 }
