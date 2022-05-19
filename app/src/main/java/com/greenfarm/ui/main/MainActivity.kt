@@ -25,10 +25,11 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
 
             // Log and toast
             Log.d("token",token.toString())
+            val database : FirebaseDatabase = FirebaseDatabase.getInstance()
+            val myRef = database.getReference("tokens")
+            myRef.child("user1").setValue(token.toString())
         })
-        val database : FirebaseDatabase = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("message")
-        myRef.setValue("hi")
+
         binding.mainSearchBtIv.setOnClickListener{
             val  intent= Intent(this, SearchActivity::class.java)
             startActivity(intent)

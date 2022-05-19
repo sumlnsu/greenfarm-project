@@ -1,5 +1,6 @@
 package com.greenfarm.ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityManager;
@@ -20,6 +21,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.greenfarm.R;
 import com.greenfarm.ui.main.SearchActivity;
 
@@ -33,6 +39,8 @@ import org.tensorflow.lite.examples.detection.tflite.YoloV5Classifier;
 import org.tensorflow.lite.examples.detection.tracking.MultiBoxTracker;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 //import java.util.Random;
@@ -235,7 +243,30 @@ public class TestActivity extends AppCompatActivity {
         imageView.setImageBitmap(bitmap);
         // 서버에 병해충 이름 사진 등 전달
         // 일정 반경 내 유저 아이디 수신
+        String[] user = {"user1","user2"};
         // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴
+        List<String> tokens = new ArrayList<String>();
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mUser = mDatabase.child("tokens");
+
+        mUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(int i = 0; i<user.length;i++){
+                    Log.d("ds",user[i]+snapshot.child(user[i]).getValue(String.class));
+                    tokens.add(snapshot.child(user[i]).getValue(String.class));
+                }
+                Log.d("tokens",tokens.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         // fcm서버에 해당 토큰에 대해 알림 요청
     }
 }
