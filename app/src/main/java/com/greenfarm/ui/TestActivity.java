@@ -43,6 +43,7 @@ import org.tensorflow.lite.examples.detection.tracking.MultiBoxTracker;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 //import java.util.Random;
@@ -211,7 +212,7 @@ public class TestActivity extends AppCompatActivity {
 //            Intent intent = new Intent(this, SearchActivity.class);
 //            startActivity(intent);
         }
-
+        List<String> disease = new ArrayList<String>();
         for(int i =0 ;i<results.size();i++){
             final Classifier.Recognition result = results.get(i);
             final RectF location = result.getLocation();
@@ -227,6 +228,7 @@ public class TestActivity extends AppCompatActivity {
                 }else{
                     paint.setColor(Color.CYAN);
                 }
+                disease.add(result.getTitle());
                 canvas.drawRect(location, paint);
                 String labelString =
                         !TextUtils.isEmpty(result.getTitle())
@@ -242,6 +244,7 @@ public class TestActivity extends AppCompatActivity {
         }
 //       tracker.trackResults(mappedRecognitions, 1);
 //        trackingOverlay.postInvalidate();
+        HashSet<String> diseaseSet = new HashSet<String>(disease);
         imageView.setImageBitmap(bitmap);
         // 서버에 병해충 이름 사진 등 전달
         // 일정 반경 내 유저 아이디 수신
@@ -260,7 +263,7 @@ public class TestActivity extends AppCompatActivity {
                     tokens.add(snapshot.child(user[i]).getValue(String.class));
                     FirebaseViewModel firebaseViewModel = new FirebaseViewModel(getApplication());
                     // fcm서버에 해당 토큰에 대해 알림 요청
-                    firebaseViewModel.sendNotification(tokens.get(i), "1","1", "1");
+                    firebaseViewModel.sendNotification(tokens.get(i),user[i],"발견된 병해충: "+diseaseSet);
                 }
                 Log.d("tokens",tokens.toString());
             }

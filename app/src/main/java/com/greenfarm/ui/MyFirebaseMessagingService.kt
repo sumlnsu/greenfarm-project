@@ -3,7 +3,6 @@ package com.greenfarm.ui
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-//import android.app.Person
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
@@ -15,7 +14,8 @@ import androidx.core.graphics.drawable.IconCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.greenfarm.R
-import com.greenfarm.ui.main.MainActivity
+//import com.greenfarm.ui.main.MainActivity
+import com.greenfarm.ui.splash.SplashActivity
 import java.util.*
 import java.util.stream.IntStream.builder
 
@@ -23,9 +23,6 @@ import java.util.stream.IntStream.builder
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     companion object {
         const val TAG = "MessagingService"
-        private const val CHANNEL_NAME = "Push Notification"
-        private const val CHANNEL_DESCRIPTION = "Push Notification 을 위한 채널"
-        private const val CHANNEL_ID = "Channel Id"
     }
 
     /* 토큰 생성 메서드 */
@@ -65,7 +62,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     // 서버에서 직접 보냈을 때
     private fun sendNotification(title: String?, body: String){
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, SplashActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) // 액티비티 중복 생성 방지
         val pendingIntent = PendingIntent.getActivity(this, 0 , intent,
             PendingIntent.FLAG_ONE_SHOT) // 일회성
@@ -97,7 +94,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // 다른 기기에서 서버로 보냈을 때
     @RequiresApi(Build.VERSION_CODES.P)
     private fun sendMessageNotification(title: String,userId: String, body: String){
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, SplashActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) // 액티비티 중복 생성 방지
         val pendingIntent = PendingIntent.getActivity(this, 0 , intent,
             PendingIntent.FLAG_ONE_SHOT) // 일회성
