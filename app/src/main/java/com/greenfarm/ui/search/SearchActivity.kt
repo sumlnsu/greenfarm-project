@@ -20,11 +20,14 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.database.FirebaseDatabase
 import com.greenfarm.R
 import com.greenfarm.databinding.ActivityMainBinding
 import com.greenfarm.databinding.ActivitySearchBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.TestActivity
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -58,6 +61,7 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
             binding.searchCategoryPartView.visibility = View.GONE
             binding.searchUploadPartView.visibility = View.VISIBLE
             className = "sesame"
+
         }
 
 
@@ -83,6 +87,7 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
         // 갤러리 가져오기 클릭
         binding.uploadGallaryBgIv.setOnClickListener{
             openGalleryForImage()
+            // 이미지 가져오는 속도가 느림 -> 에뮬레이터에서만 느린지 확인해야 함
         }
 
 
@@ -97,7 +102,6 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
             }
             Log.d("end","end")
         }
-
     }
 
 
@@ -146,6 +150,7 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
                     this, "com.greenfarm.fileprovider", it
                 )
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                takePictureIntent.putExtra("crop",true)
                 startActivityForResult(takePictureIntent, 1)
                 isImageUploaded = true
             }
@@ -168,10 +173,10 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
 
 
     // Gallery
-
     private fun openGalleryForImage(){
         var intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
         intent.putExtra(Intent.EXTRA_INITIAL_INTENTS, true)
+        intent.putExtra("crop",true)
         intent.type = "image/*"
         intent.action = Intent.ACTION_OPEN_DOCUMENT
 
@@ -190,16 +195,23 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
 
                     // 카메라로부터 받은 데이터가 있을경우에만
                     val file = File(filepath)
-                    if (Build.VERSION.SDK_INT < 28) {
-                        val bitmap = MediaStore.Images.Media
-                            .getBitmap(contentResolver, Uri.fromFile(file))  //Deprecated
-                        binding.uploadImage.setImageBitmap(bitmap)
-                    }
-                    else{
-                        val decode = ImageDecoder.createSource(this.contentResolver,
-                            Uri.fromFile(file))
-                        val bitmap = ImageDecoder.decodeBitmap(decode)
-                        binding.uploadImage.setImageBitmap(bitmap)
+                    val selectedUri = Uri.fromFile(file)
+                    try{
+                        selectedUri?.let{
+                            if (Build.VERSION.SDK_INT < 28) {
+                                val bitmap = MediaStore.Images.Media
+                                    .getBitmap(contentResolver, selectedUri)  //Deprecated
+                                launchImageCrop(selectedUri)
+                            }
+                            else{
+                                val decode = ImageDecoder.createSource(this.contentResolver,
+                                    selectedUri)
+                                val bitmap = ImageDecoder.decodeBitmap(decode)
+                                launchImageCrop(selectedUri)
+                            }
+                        }
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
                     }
                 }
             }
@@ -207,15 +219,32 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
             2 -> {
                 if (resultCode == Activity.RESULT_OK && requestCode == 2){
                     data?.data?.let { uri ->
-                        val imageUri : Uri? = data?.data
-                        if (imageUri != null){
-                            contentResolver.takePersistableUriPermission(imageUri,Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                            var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
-                            saveBitmapAsPNGFile(bitmap)
-                        }
                     }
-                    binding.uploadImage.setImageURI(data?.data) // handle chosen image
+                    val imageUri : Uri? = data?.data
+                    if (imageUri != null){
+                        contentResolver.takePersistableUriPermission(imageUri,Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+                        /*saveBitmapAsPNGFile(bitmap)*/
+                        launchImageCrop(imageUri)
+                    }
                 }
+            }
+
+
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                if(resultCode == Activity.RESULT_OK) {
+                    result.uri?.let {
+                        binding.uploadImage.setImageBitmap(result.bitmap)
+                        binding.uploadImage.setImageURI(result.uri)
+                        var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, result.uri)
+                        saveBitmapAsPNGFile(bitmap)
+                    }
+                }
+                else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+                    val error = result.error
+                }
+
             }
         }
     }
@@ -244,6 +273,12 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
         }catch (e: Exception){
 
         }
+    }
+
+
+    private fun launchImageCrop(uri : Uri?){
+        CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON).setCropShape(CropImageView.CropShape.RECTANGLE)
+            .start(this)
     }
 
 

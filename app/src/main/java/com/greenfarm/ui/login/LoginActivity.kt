@@ -1,12 +1,17 @@
 package com.greenfarm.ui.login
 
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.greenfarm.data.entities.User
 import com.greenfarm.data.remote.auth.Auth
 import com.greenfarm.data.remote.auth.AuthService
 import com.greenfarm.databinding.ActivityLoginBinding
 import com.greenfarm.ui.BaseActivity
+import com.greenfarm.ui.MyFirebaseMessagingService
 import com.greenfarm.ui.main.MainActivity
 import com.greenfarm.ui.signup.SignUpActivity
 import com.greenfarm.utils.saveJwt
@@ -14,6 +19,9 @@ import com.greenfarm.utils.saveJwt
 class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginView, View.OnClickListener {
 
     override fun initAfterBinding() {
+
+
+
         binding.loginBt.setOnClickListener(this)
         binding.loginSignUpBt.setOnClickListener(this)
     }
@@ -24,6 +32,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         when(v) {
             binding.loginSignUpBt -> startNextActivity(SignUpActivity::class.java)
             binding.loginBt -> startNextActivity(MainActivity::class.java)
+            // 로그인이 되었을 때 유저 아이디와 토큰을 데이터베이스에 저장 -> 메인 엑티비티에서 실행해도 됨
         }
     }
 

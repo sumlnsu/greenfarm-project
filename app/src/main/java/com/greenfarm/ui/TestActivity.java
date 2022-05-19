@@ -1,5 +1,6 @@
 package com.greenfarm.ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityManager;
@@ -20,9 +21,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.greenfarm.R;
+import com.greenfarm.data.entities.NotificationBody;
+import com.greenfarm.ui.main.SearchActivity;
 
 //import org.tensorflow.lite.examples.detection.DetectorActivity;
+import com.greenfarm.data.entities.FirebaseViewModel;
 import org.tensorflow.lite.examples.detection.customview.OverlayView;
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
 import org.tensorflow.lite.examples.detection.env.Logger;
@@ -32,6 +41,8 @@ import org.tensorflow.lite.examples.detection.tflite.YoloV5Classifier;
 import org.tensorflow.lite.examples.detection.tracking.MultiBoxTracker;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 //import java.util.Random;
@@ -89,16 +100,24 @@ public class TestActivity extends AppCompatActivity {
         ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
 
+
         Handler handler = new Handler();
 
         new Thread(() -> {
+            long startTime = System.currentTimeMillis();
             final List<Classifier.Recognition> results = detector.recognizeImage(cropBitmap);
+
             handler.post(new Runnable() {
                 @Override
                 public void run() {
                     handleResult(cropBitmap, results);
+                    long endTime = System.currentTimeMillis();
+                    Log.d("Model running time", String.valueOf(((endTime - startTime))));
+                    // 모델 실행시간 약 0.9 ~ 1초
                 }
             });
+
+
         }).start();
 
         System.err.println(Double.parseDouble(configurationInfo.getGlEsVersion()));
@@ -187,6 +206,12 @@ public class TestActivity extends AppCompatActivity {
         textPaint.setAntiAlias(false);
         textPaint.setAlpha(255);
 
+        if(results.size() == 0){
+            // show image guide line
+//            Intent intent = new Intent(this, SearchActivity.class);
+//            startActivity(intent);
+        }
+
         for(int i =0 ;i<results.size();i++){
             final Classifier.Recognition result = results.get(i);
             final RectF location = result.getLocation();
@@ -218,5 +243,33 @@ public class TestActivity extends AppCompatActivity {
 //       tracker.trackResults(mappedRecognitions, 1);
 //        trackingOverlay.postInvalidate();
         imageView.setImageBitmap(bitmap);
+        // 서버에 병해충 이름 사진 등 전달
+        // 일정 반경 내 유저 아이디 수신
+        String[] user = {"user1","user2"};
+        // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴
+        List<String> tokens = new ArrayList<String>();
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mUser = mDatabase.child("tokens");
+
+        mUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(int i = 0; i<user.length;i++){
+                    Log.d("ds",user[i]+snapshot.child(user[i]).getValue(String.class));
+                    tokens.add(snapshot.child(user[i]).getValue(String.class));
+                    FirebaseViewModel firebaseViewModel = new FirebaseViewModel(getApplication());
+                    // fcm서버에 해당 토큰에 대해 알림 요청
+                    firebaseViewModel.sendNotification(tokens.get(i), "1","1", "1");
+                }
+                Log.d("tokens",tokens.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }
