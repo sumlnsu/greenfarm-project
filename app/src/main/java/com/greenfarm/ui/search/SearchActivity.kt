@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.database.FirebaseDatabase
 import com.greenfarm.R
 import com.greenfarm.databinding.ActivityMainBinding
 import com.greenfarm.databinding.ActivitySearchBinding
@@ -60,6 +61,7 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
             binding.searchCategoryPartView.visibility = View.GONE
             binding.searchUploadPartView.visibility = View.VISIBLE
             className = "sesame"
+
         }
 
 
@@ -85,6 +87,7 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
         // 갤러리 가져오기 클릭
         binding.uploadGallaryBgIv.setOnClickListener{
             openGalleryForImage()
+            // 이미지 가져오는 속도가 느림 -> 에뮬레이터에서만 느린지 확인해야 함
         }
 
 

@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1072156418018",
+    "project_id": "fcmtest-8948e",
+    "storage_bucket": "fcmtest-8948e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072156418018:android:f5771b875497d2b738a3bb",
+        "android_client_info": {
+          "package_name": "com.example.fcmtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072156418018-a5il1cqrd8t11a72t80ipop6rm1po7fh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbamOtDQ8XPpBlJbNR__BzqMu8-p_3Vo4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072156418018-a5il1cqrd8t11a72t80ipop6rm1po7fh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072156418018:android:119af571226d63d838a3bb",
+        "android_client_info": {
+          "package_name": "com.greenfarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072156418018-a5il1cqrd8t11a72t80ipop6rm1po7fh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbamOtDQ8XPpBlJbNR__BzqMu8-p_3Vo4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072156418018-a5il1cqrd8t11a72t80ipop6rm1po7fh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
