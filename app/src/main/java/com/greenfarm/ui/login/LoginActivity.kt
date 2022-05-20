@@ -21,7 +21,6 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
     override fun initAfterBinding() {
 
 
-
         binding.loginBt.setOnClickListener(this)
         binding.loginSignUpBt.setOnClickListener(this)
     }
@@ -31,24 +30,15 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
         when(v) {
             binding.loginSignUpBt -> startNextActivity(SignUpActivity::class.java)
-            binding.loginBt -> startNextActivity(MainActivity::class.java)
+            binding.loginBt -> {
+                login()
+                startNextActivity(MainActivity::class.java)
+            }
             // 로그인이 되었을 때 유저 아이디와 토큰을 데이터베이스에 저장 -> 메인 엑티비티에서 실행해도 됨
         }
     }
 
-    override fun onLoginLoading() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLoginSuccess(auth: Auth) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLoginFailure(code: Int, message: String) {
-        TODO("Not yet implemented")
-    }
-
-    /*private fun login(){
+    private fun login(){
         if(binding.loginId.text.toString().isEmpty()){
             binding.loginIdError.visibility = View.VISIBLE
             return
@@ -87,5 +77,5 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                 binding.loginPasswordError.visibility = View.VISIBLE
             }
         }
-    }*/
+    }
 }

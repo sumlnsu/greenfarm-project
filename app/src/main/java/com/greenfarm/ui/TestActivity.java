@@ -82,7 +82,7 @@ public class TestActivity extends AppCompatActivity {
             TF_OD_API_MODEL_FILE = "best-fp16-sesame-s.tflite";
             TF_OD_API_LABELS_FILE = "file:///android_asset/ctest.txt";
         }else if(getIntent().getStringExtra("class").equals("red-bean")){
-            TF_OD_API_MODEL_FILE = "best-fp16.tflite";
+            TF_OD_API_MODEL_FILE = "best-fp16-redbean.tflite";
             TF_OD_API_LABELS_FILE = "file:///android_asset/btest.txt";
         }else if(getIntent().getStringExtra("class").equals("bean")){
             // 모델 필요
@@ -204,68 +204,95 @@ public class TestActivity extends AppCompatActivity {
             // show image guide line
 //            Intent intent = new Intent(this, SearchActivity.class);
 //            startActivity(intent);
-        }
-
-        List<String> disease = new ArrayList<String>();
-        for(int i =0 ;i<results.size();i++){
-            final Classifier.Recognition result = results.get(i);
-            final RectF location = result.getLocation();
-            Log.d("l", String.valueOf(location));
-            if (location != null && result.getConfidence() >= MINIMUM_CONFIDENCE_TF_OD_API) {
-                Log.d("title",result.getTitle());
-                if(result.getTitle().equals("rhizopus")){
-                    paint.setColor(Color.RED);
-                }else if(result.getTitle().equals("세균잎마름병") ){
-                    paint.setColor(Color.BLUE);
-                }else if(result.getTitle().equals("흰가루병")){
-                    paint.setColor(Color.GREEN);
-                }else{
-                    paint.setColor(Color.CYAN);
-                }
-                disease.add(result.getTitle());
-                canvas.drawRect(location, paint);
-                String labelString =
-                        !TextUtils.isEmpty(result.getTitle())
-                                ? String.format("%s %.2f", result.getTitle(), (100 * result.getConfidence()))
-                                : String.format("%.2f", (100 * result.getConfidence()));
-                canvas.drawText(labelString, location.left,location.top,textPaint);
+        }else{
+            List<String> disease = new ArrayList<String>();
+            for(int i =0 ;i<results.size();i++){
+                final Classifier.Recognition result = results.get(i);
+                final RectF location = result.getLocation();
+                Log.d("l", String.valueOf(location));
+                if(getIntent().getStringExtra("class").equals("sesame")){
+                    if (location != null && result.getConfidence() >= MINIMUM_CONFIDENCE_TF_OD_API) {
+                        Log.d("title",result.getTitle());
+                        if(result.getTitle().equals("세균성점무늬병")){
+                            paint.setColor(Color.RED);
+                        }else if(result.getTitle().equals("흰가루병") ){
+                            paint.setColor(Color.BLUE);
+                        }else{
+                            paint.setColor(Color.CYAN);
+                        }
+                        disease.add(result.getTitle());
+                        canvas.drawRect(location, paint);
+                        String labelString =
+                                !TextUtils.isEmpty(result.getTitle())
+                                        ? String.format("%s %.2f", result.getTitle(), (100 * result.getConfidence()))
+                                        : String.format("%.2f", (100 * result.getConfidence()));
+                        canvas.drawText(labelString, location.left,location.top,textPaint);
+    //                cropToFrameTransform.mapRect(location);
+    //
+    //                result.setLocation(location);
+    //                Log.d("2",result.getLocation().toString());
+    //                mappedRecognitions.add(result);
+                    }
+                } else if(getIntent().getStringExtra("class").equals("red-bean")){
+                    if (location != null && result.getConfidence() >= MINIMUM_CONFIDENCE_TF_OD_API) {
+                        Log.d("title",result.getTitle());
+                        if(result.getTitle().equals("rhizopus")){
+                            paint.setColor(Color.RED);
+                        }else if(result.getTitle().equals("세균잎마름병") ){
+                            paint.setColor(Color.BLUE);
+                        }else if(result.getTitle().equals("흰가루병")){
+                            paint.setColor(Color.GREEN);
+                        }else{
+                            paint.setColor(Color.CYAN);
+                        }
+                        disease.add(result.getTitle());
+                        canvas.drawRect(location, paint);
+                        String labelString =
+                                !TextUtils.isEmpty(result.getTitle())
+                                        ? String.format("%s %.2f", result.getTitle(), (100 * result.getConfidence()))
+                                        : String.format("%.2f", (100 * result.getConfidence()));
+                        canvas.drawText(labelString, location.left,location.top,textPaint);
 //                cropToFrameTransform.mapRect(location);
 //
 //                result.setLocation(location);
 //                Log.d("2",result.getLocation().toString());
 //                mappedRecognitions.add(result);
+                    }
+                }
+
             }
-        }
 //       tracker.trackResults(mappedRecognitions, 1);
 //        trackingOverlay.postInvalidate();
-        HashSet<String> diseaseSet = new HashSet<String>(disease);
-        imageView.setImageBitmap(bitmap);
-        // 서버에 병해충 이름 사진 등 전달
-        // 일정 반경 내 유저 아이디 수신
-        String[] user = {"user1","user2"};
-        // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴
-        List<String> tokens = new ArrayList<String>();
-        DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mUser = mDatabase.child("tokens");
+            HashSet<String> diseaseSet = new HashSet<String>(disease);
+            imageView.setImageBitmap(bitmap);
+            // 서버에 병해충 이름 사진 등 전달
+            // 일정 반경 내 유저 아이디 수신
+            String[] user = {"user1","user2"};
+            // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴
+            List<String> tokens = new ArrayList<String>();
+            DatabaseReference mDatabase;
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference mUser = mDatabase.child("tokens");
 
-        mUser.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(int i = 0; i<user.length;i++){
-                    Log.d("ds",user[i]+snapshot.child(user[i]).getValue(String.class));
-                    tokens.add(snapshot.child(user[i]).getValue(String.class));
-                    FirebaseViewModel firebaseViewModel = new FirebaseViewModel(getApplication());
-                    // fcm서버에 해당 토큰에 대해 알림 요청
-                    firebaseViewModel.sendNotification(tokens.get(i),user[i],"발견된 병해충: "+ diseaseSet);
+            mUser.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(int i = 0; i<user.length;i++){
+                        Log.d("ds",user[i]+snapshot.child(user[i]).getValue(String.class));
+                        tokens.add(snapshot.child(user[i]).getValue(String.class));
+                        FirebaseViewModel firebaseViewModel = new FirebaseViewModel(getApplication());
+                        // fcm서버에 해당 토큰에 대해 알림 요청
+                        firebaseViewModel.sendNotification(tokens.get(i),user[i],"발견된 병해충: "+ diseaseSet);
+                    }
+                    Log.d("tokens",tokens.toString());
                 }
-                Log.d("tokens",tokens.toString());
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
+
 
     }
 }
