@@ -43,6 +43,7 @@ import org.tensorflow.lite.examples.detection.tracking.MultiBoxTracker;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 //import java.util.Random;
@@ -50,7 +51,7 @@ import java.util.List;
 public class TestActivity extends AppCompatActivity {
 
     public static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.5f;
-    private static String TF_OD_API_MODEL_FILE = "best-fp16-sesame-s.tflite";
+    private static String TF_OD_API_MODEL_FILE = "best-fp16-sesame-m.tflite";
 
     private static String TF_OD_API_LABELS_FILE = "file:///android_asset/ctest.txt";
 
@@ -58,9 +59,7 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-/*
-        cameraButton = findViewById(R.id.cameraButton);
-        detectButton = findViewById(R.id.detectButton);*/
+
         imageView = findViewById(R.id.imageView);
 
 //        cameraButton.setOnClickListener(v -> startActivity(new Intent(TestActivity.this, DetectorActivity.class)));
@@ -94,8 +93,6 @@ public class TestActivity extends AppCompatActivity {
 
         this.imageView.setImageBitmap(cropBitmap);
 
-
-
         initBox();
         ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
@@ -116,8 +113,6 @@ public class TestActivity extends AppCompatActivity {
                     // 모델 실행시간 약 0.9 ~ 1초
                 }
             });
-
-
         }).start();
 
         System.err.println(Double.parseDouble(configurationInfo.getGlEsVersion()));
@@ -150,7 +145,6 @@ public class TestActivity extends AppCompatActivity {
     private Bitmap sourceBitmap;
     private Bitmap cropBitmap;
 
-    private Button cameraButton, detectButton;
     private ImageView imageView;
 
     private void initBox() {
@@ -212,6 +206,7 @@ public class TestActivity extends AppCompatActivity {
 //            startActivity(intent);
         }
 
+        List<String> disease = new ArrayList<String>();
         for(int i =0 ;i<results.size();i++){
             final Classifier.Recognition result = results.get(i);
             final RectF location = result.getLocation();
@@ -227,6 +222,7 @@ public class TestActivity extends AppCompatActivity {
                 }else{
                     paint.setColor(Color.CYAN);
                 }
+                disease.add(result.getTitle());
                 canvas.drawRect(location, paint);
                 String labelString =
                         !TextUtils.isEmpty(result.getTitle())
@@ -242,6 +238,7 @@ public class TestActivity extends AppCompatActivity {
         }
 //       tracker.trackResults(mappedRecognitions, 1);
 //        trackingOverlay.postInvalidate();
+        HashSet<String> diseaseSet = new HashSet<String>(disease);
         imageView.setImageBitmap(bitmap);
         // 서버에 병해충 이름 사진 등 전달
         // 일정 반경 내 유저 아이디 수신
@@ -260,11 +257,10 @@ public class TestActivity extends AppCompatActivity {
                     tokens.add(snapshot.child(user[i]).getValue(String.class));
                     FirebaseViewModel firebaseViewModel = new FirebaseViewModel(getApplication());
                     // fcm서버에 해당 토큰에 대해 알림 요청
-                    firebaseViewModel.sendNotification(tokens.get(i), "1","1", "1");
+                    firebaseViewModel.sendNotification(tokens.get(i),user[i],"발견된 병해충: "+ diseaseSet);
                 }
                 Log.d("tokens",tokens.toString());
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
