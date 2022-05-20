@@ -17,8 +17,8 @@ object AuthService {
 
         signUpView.onSignUpLoading()
 
-        authService.signUp(user).enqueue(object : Callback<AuthResponse> {
-            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
+        authService.signUp(user).enqueue(object : Callback<SignUpResponse> {
+            override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
 
                 val resp = response.body()!!
 
@@ -28,7 +28,7 @@ object AuthService {
                 }
             }
 
-            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
                 Log.d("$TAG/API-ERROR", t.message.toString())
 
                 signUpView.onSignUpFailure(400, "네트워크 오류가 발생했습니다.")
@@ -41,8 +41,8 @@ object AuthService {
 
         loginView.onLoginLoading()
 
-        authService.login(user).enqueue(object : Callback<AuthResponse> {
-            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
+        authService.login(user).enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 val resp = response.body()!!
                 Log.d("test",resp.message)
                 when(resp.code){
@@ -51,33 +51,10 @@ object AuthService {
                 }
             }
 
-            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Log.d("$TAG/API-ERROR", t.message.toString())
 
                 loginView.onLoginFailure(400, "네트워크 오류가 발생했습니다.")
-            }
-        })
-    }
-
-    fun autoLogin(splashView: SplashView) {
-        val authService = retrofit.create(AuthRetrofitInterface::class.java)
-
-        splashView.onAutoLoginLoading()
-
-        authService.autoLogin().enqueue(object : Callback<AuthResponse> {
-            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
-                val resp = response.body()!!
-
-                when(resp.code){
-                    1000 -> splashView.onAutoLoginSuccess()
-                    else -> splashView.onAutoLoginFailure(resp.code, resp.message)
-                }
-            }
-
-            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
-                Log.d("$TAG/API-ERROR", t.message.toString())
-
-                splashView.onAutoLoginFailure(400, "네트워크 오류가 발생했습니다.")
             }
         })
     }
