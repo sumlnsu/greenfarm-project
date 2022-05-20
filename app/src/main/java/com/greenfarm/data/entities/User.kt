@@ -3,7 +3,7 @@ package com.greenfarm.data.entities
 import com.google.gson.annotations.SerializedName
 
 data class User(
-    @SerializedName("email") val email: String,
-    @SerializedName("password") val password: String,
-    @SerializedName("name") val name: String
+    @SerializedName("user_id") val id: String,
+    @SerializedName("user_pw") val password: String,
+    @SerializedName("location") val location: String
 )

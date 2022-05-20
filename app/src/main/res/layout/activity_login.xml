@@ -43,7 +43,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginStart="34dp"
         android:layout_marginEnd="34dp"
-        android:background="@color/dark_taupe"
+        android:background="@color/black"
         />
 
 
@@ -89,7 +89,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginStart="34dp"
         android:layout_marginEnd="34dp"
-        android:background="@color/dark_taupe"
+        android:background="@color/black"
         />
 
     <TextView
