@@ -1,5 +1,6 @@
 package com.greenfarm.ui.login
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -7,11 +8,14 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.greenfarm.data.entities.User
-import com.greenfarm.data.remote.auth.Auth
+//import com.greenfarm.data.remote.auth.Auth
 import com.greenfarm.data.remote.auth.AuthService
+import com.greenfarm.data.remote.auth.LoginResponse
+import com.greenfarm.data.remote.auth.LoginResult
 import com.greenfarm.databinding.ActivityLoginBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.MyFirebaseMessagingService
+import com.greenfarm.ui.TestActivity
 import com.greenfarm.ui.main.MainActivity
 import com.greenfarm.ui.signup.SignUpActivity
 import com.greenfarm.utils.saveJwt
@@ -19,7 +23,6 @@ import com.greenfarm.utils.saveJwt
 class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginView, View.OnClickListener {
 
     override fun initAfterBinding() {
-
 
 
         binding.loginBt.setOnClickListener(this)
@@ -31,24 +34,15 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
         when(v) {
             binding.loginSignUpBt -> startNextActivity(SignUpActivity::class.java)
-            binding.loginBt -> startNextActivity(MainActivity::class.java)
+            binding.loginBt -> {
+                login()
+
+            }
             // 로그인이 되었을 때 유저 아이디와 토큰을 데이터베이스에 저장 -> 메인 엑티비티에서 실행해도 됨
         }
     }
 
-    override fun onLoginLoading() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLoginSuccess(auth: Auth) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLoginFailure(code: Int, message: String) {
-        TODO("Not yet implemented")
-    }
-
-    /*private fun login(){
+    private fun login(){
         if(binding.loginId.text.toString().isEmpty()){
             binding.loginIdError.visibility = View.VISIBLE
             return
@@ -70,11 +64,15 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
     }
 
-    override fun onLoginSuccess(auth: Auth) {
+    override fun onLoginSuccess(loginResult: LoginResult, id: String) {
         binding.loginLoadingPb.visibility = View.GONE
 
-        saveJwt(auth.jwt)
-        startActivityWithClear(MainActivity::class.java)
+        saveJwt(loginResult.jwt)
+        val intent= Intent(this, MainActivity::class.java)
+        Log.d("id",id)
+        intent.putExtra("user-id",id)
+        finish()
+        startActivity(intent)
 
     }
 
@@ -87,5 +85,5 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                 binding.loginPasswordError.visibility = View.VISIBLE
             }
         }
-    }*/
+    }
 }
