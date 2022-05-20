@@ -7,10 +7,10 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface AuthRetrofitInterface {
-    @POST("/users")
+    @POST("/user/sign-up")
     fun signUp(@Body user: User): Call<AuthResponse>
 
-    @POST("/users/login")
+    @POST("/users/log-in")
     fun login(@Body user: User): Call<AuthResponse>
 
     @GET("/users/auto-login")
