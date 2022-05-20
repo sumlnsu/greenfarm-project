@@ -1,5 +1,6 @@
 package com.greenfarm.ui.login
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.greenfarm.data.remote.auth.AuthService
 import com.greenfarm.databinding.ActivityLoginBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.MyFirebaseMessagingService
+import com.greenfarm.ui.TestActivity
 import com.greenfarm.ui.main.MainActivity
 import com.greenfarm.ui.signup.SignUpActivity
 import com.greenfarm.utils.saveJwt
@@ -32,7 +34,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
             binding.loginSignUpBt -> startNextActivity(SignUpActivity::class.java)
             binding.loginBt -> {
                 login()
-                startNextActivity(MainActivity::class.java)
+
             }
             // 로그인이 되었을 때 유저 아이디와 토큰을 데이터베이스에 저장 -> 메인 엑티비티에서 실행해도 됨
         }
@@ -60,11 +62,15 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
     }
 
-    override fun onLoginSuccess(auth: Auth) {
+    override fun onLoginSuccess(auth: Auth, id: String) {
         binding.loginLoadingPb.visibility = View.GONE
 
         saveJwt(auth.jwt)
-        startActivityWithClear(MainActivity::class.java)
+        val intent= Intent(this, MainActivity::class.java)
+        Log.d("id",id)
+        intent.putExtra("user-id",id)
+        finish()
+        startActivity(intent)
 
     }
 
