@@ -7,8 +7,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.greenfarm.data.entities.User
-import com.greenfarm.data.remote.auth.Auth
 import com.greenfarm.data.remote.auth.AuthService
+import com.greenfarm.data.remote.auth.LoginResult
 import com.greenfarm.databinding.ActivityLoginBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.MyFirebaseMessagingService
@@ -40,7 +40,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         TODO("Not yet implemented")
     }
 
-    override fun onLoginSuccess(auth: Auth) {
+    override fun onLoginSuccess(loginresult: LoginResult) {
         TODO("Not yet implemented")
     }
 

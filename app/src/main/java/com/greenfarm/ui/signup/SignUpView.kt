@@ -1,5 +1,6 @@
 package com.greenfarm.ui.signup
 
+
 interface SignUpView {
     fun onSignUpLoading()
     fun onSignUpSuccess()
