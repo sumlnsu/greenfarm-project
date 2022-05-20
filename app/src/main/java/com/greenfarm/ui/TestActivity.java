@@ -34,6 +34,7 @@ import com.greenfarm.ui.main.SearchActivity;
 import com.greenfarm.data.entities.FirebaseViewModel;
 import org.tensorflow.lite.examples.detection.customview.OverlayView;
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
+import com.greenfarm.ui.main.SearchActivity;
 import org.tensorflow.lite.examples.detection.env.Logger;
 import org.tensorflow.lite.examples.detection.env.Utils;
 import org.tensorflow.lite.examples.detection.tflite.Classifier;
@@ -53,7 +54,7 @@ public class TestActivity extends AppCompatActivity {
     public static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.5f;
     private static String TF_OD_API_MODEL_FILE = "best-fp16-sesame-m.tflite";
 
-    private static String TF_OD_API_LABELS_FILE = "file:///android_asset/ctest.txt";
+    private static String TF_OD_API_LABELS_FILE = "file:///android_asset/sesame-label.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +81,10 @@ public class TestActivity extends AppCompatActivity {
 
         if(getIntent().getStringExtra("class").equals("sesame")){
             TF_OD_API_MODEL_FILE = "best-fp16-sesame-s.tflite";
-            TF_OD_API_LABELS_FILE = "file:///android_asset/ctest.txt";
+            TF_OD_API_LABELS_FILE = "file:///android_asset/sesame-label.txt";
         }else if(getIntent().getStringExtra("class").equals("red-bean")){
             TF_OD_API_MODEL_FILE = "best-fp16-redbean.tflite";
-            TF_OD_API_LABELS_FILE = "file:///android_asset/btest.txt";
+            TF_OD_API_LABELS_FILE = "file:///android_asset/red-bean-label.txt";
         }else if(getIntent().getStringExtra("class").equals("bean")){
             // 모델 필요
         }
@@ -126,8 +127,6 @@ public class TestActivity extends AppCompatActivity {
 
     private static final boolean TF_OD_API_IS_QUANTIZED = false;
 
-
-
     // Minimum detection confidence to track a detection.
     private static final boolean MAINTAIN_ASPECT = true;
     private Integer sensorOrientation = 90;
@@ -148,23 +147,23 @@ public class TestActivity extends AppCompatActivity {
     private ImageView imageView;
 
     private void initBox() {
-        previewHeight = TF_OD_API_INPUT_SIZE;
-        previewWidth = TF_OD_API_INPUT_SIZE;
-        frameToCropTransform =
-                ImageUtils.getTransformationMatrix(
-                        previewWidth, previewHeight,
-                        TF_OD_API_INPUT_SIZE, TF_OD_API_INPUT_SIZE,
-                        sensorOrientation, MAINTAIN_ASPECT);
-
-        cropToFrameTransform = new Matrix();
-        frameToCropTransform.invert(cropToFrameTransform);
-
-        tracker = new MultiBoxTracker(this);
-        trackingOverlay = findViewById(R.id.tracking_overlay);
-        trackingOverlay.addCallback(
-                canvas -> tracker.draw(canvas));
-
-        tracker.setFrameConfiguration(TF_OD_API_INPUT_SIZE, TF_OD_API_INPUT_SIZE, sensorOrientation);
+//        previewHeight = TF_OD_API_INPUT_SIZE;
+//        previewWidth = TF_OD_API_INPUT_SIZE;
+//        frameToCropTransform =
+//                ImageUtils.getTransformationMatrix(
+//                        previewWidth, previewHeight,
+//                        TF_OD_API_INPUT_SIZE, TF_OD_API_INPUT_SIZE,
+//                        sensorOrientation, MAINTAIN_ASPECT);
+//
+//        cropToFrameTransform = new Matrix();
+//        frameToCropTransform.invert(cropToFrameTransform);
+//
+//        tracker = new MultiBoxTracker(this);
+//        trackingOverlay = findViewById(R.id.tracking_overlay);
+//        trackingOverlay.addCallback(
+//                canvas -> tracker.draw(canvas));
+//
+//        tracker.setFrameConfiguration(TF_OD_API_INPUT_SIZE, TF_OD_API_INPUT_SIZE, sensorOrientation);
 
         try {
             detector =
@@ -263,8 +262,11 @@ public class TestActivity extends AppCompatActivity {
             }
 //       tracker.trackResults(mappedRecognitions, 1);
 //        trackingOverlay.postInvalidate();
+
             HashSet<String> diseaseSet = new HashSet<String>(disease);
             imageView.setImageBitmap(bitmap);
+
+
             // 서버에 병해충 이름 사진 등 전달
             // 일정 반경 내 유저 아이디 수신
             String[] user = {"user1","user2"};
