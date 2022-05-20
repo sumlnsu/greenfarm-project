@@ -7,9 +7,6 @@ import kotlinx.coroutines.launch
 
 
 class FirebaseViewModel(application: Application) : AndroidViewModel(application) {
-
-
-
     // 푸시 메세지 전송
 
     fun sendNotification(token:String, userId:String, message:String) {
@@ -20,6 +17,4 @@ class FirebaseViewModel(application: Application) : AndroidViewModel(application
             RetrofitInstance.api.sendNotification(body)
         }
     }
-
-
 }
