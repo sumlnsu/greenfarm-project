@@ -8,10 +8,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 object NearbyUser {
-    fun getNearbyUser(testActivity: TestActivity, token: String?, userId: String) {
+    fun getNearbyUser(testActivity: TestActivity, userId: String) {
         val getNearbyUserService = ApplicationClass.retrofit.create(NearbyUserRetrofitInterface::class.java)
 
-        getNearbyUserService.getUser(token, userId).enqueue(object : Callback<NearbyUserResponse> {
+        getNearbyUserService.getUser(userId).enqueue(object : Callback<NearbyUserResponse> {
             override fun onResponse(call: Call<NearbyUserResponse>, response: Response<NearbyUserResponse>) {
                 Log.d("res",response.message())
                 val resp = response.body()!!

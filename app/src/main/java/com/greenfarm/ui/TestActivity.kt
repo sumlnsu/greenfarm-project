@@ -184,43 +184,14 @@ class TestActivity : AppCompatActivity() {
             // 일정 반경 내 유저 아이디 수신
             var userId = intent.getStringExtra("user-id").toString()
             var jwtToken = getJwt().toString()
-            NearbyUser.getNearbyUser(this,jwtToken,userId)
-//            Log.d("near", userList.get(0))
-//            Log.d("jwtToken", jwtToken)
-//            val user = arrayOf("user1", "user2")
-//            // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴
-//            val tokens: MutableList<String?> = ArrayList()
-//            val mDatabase: DatabaseReference = FirebaseDatabase.getInstance().reference
-//            val mUser = mDatabase.child("tokens")
-//            mUser.addValueEventListener(object : ValueEventListener {
-//                override fun onDataChange(snapshot: DataSnapshot) {
-//                    for (i in user.indices) {
-//                        Log.d(
-//                            "ds", user[i] + snapshot.child(user[i]).getValue(
-//                                String::class.java
-//                            )
-//                        )
-//                        tokens.add(snapshot.child(user[i]).getValue(String::class.java))
-//                        val firebaseViewModel = FirebaseViewModel(application)
-//                        // fcm서버에 해당 토큰에 대해 알림 요청
-//                        firebaseViewModel.sendNotification(
-//                            tokens[i]!!,
-//                            user[i],
-//                            "발견된 병해충: $diseaseSet"
-//                        )
-//                    }
-//                    Log.d("tokens", tokens.toString())
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {}
-//            })
+            NearbyUser.getNearbyUser(this,userId)
         }
     }
     fun setUserList(nearbyUsers: List<String>) {
         for (i in nearbyUsers){
             userList.add(i)
         }
-        Log.d("near", userList.get(0))
+
         val user = arrayOf("user1", "user2")
         val diseaseSet = HashSet(disease)
         // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴

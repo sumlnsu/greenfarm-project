@@ -8,6 +8,6 @@ import retrofit2.http.Query
 interface NearbyUserRetrofitInterface {
     @GET("/user/nearby")
     fun getUser(
-        @Header("X-ACCESS-TOKEN") token: String?,
+
         @Query("user_id") userId: String): Call<NearbyUserResponse>
 }
