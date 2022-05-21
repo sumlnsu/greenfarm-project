@@ -191,8 +191,6 @@ class TestActivity : AppCompatActivity() {
         for (i in nearbyUsers){
             userList.add(i)
         }
-
-        val user = arrayOf("user1", "user2")
         val diseaseSet = HashSet(disease)
         // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴
         val tokens: MutableList<String?> = ArrayList()
@@ -200,7 +198,7 @@ class TestActivity : AppCompatActivity() {
         val mUser = mDatabase.child("tokens")
         mUser.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (i in user.indices) {
+                for (i in nearbyUsers.indices) {
                     Log.d(
                         "ds", nearbyUsers[i] + snapshot.child(nearbyUsers[i]).getValue(
                             String::class.java
