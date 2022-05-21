@@ -14,8 +14,8 @@
 
                 <ImageView
                     android:id="@+id/test_image_bg"
-                    android:layout_width="330dp"
-                    android:layout_height="330dp"
+                    android:layout_width="310dp"
+                    android:layout_height="310dp"
                     android:src="@drawable/test_image_bg"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
                     app:layout_constraintTop_toTopOf="@id/test_image_bg"
                     tools:srcCompat="@drawable/example_image" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <!--<LinearLayout
                     android:id="@+id/test_result_information_layout"
                     android:layout_width="380dp"
                     android:layout_height="wrap_content"
@@ -43,24 +43,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:background="@drawable/test_radius"
-                    >
+                    android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="300dp"
-                            android:layout_height="1000dp"
-                            android:background="@color/black"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/test_result_item_recyclerview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:listitem="@layout/item_test_result"
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            />
 
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
+                </LinearLayout>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>
