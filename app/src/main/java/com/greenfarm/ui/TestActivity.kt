@@ -141,10 +141,10 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
                 if (intent.getStringExtra("class") == "sesame") {
                     if (location != null && result.confidence >= MINIMUM_CONFIDENCE_TF_OD_API) {
                         Log.d("title", result.title)
-                        if (result.title == "세균성점무늬병") {
+                        if (result.title == "Bacterial leaf spo") {
                             paint.color = Color.RED
                             sickname = "Bacterial leaf spo"
-                        } else if (result.title == "흰가루병") {
+                        } else if (result.title == "Powdery mildew2") {
                             paint.color = Color.BLUE
                             sickname = "Powdery mildew2"
                         } else {
@@ -163,7 +163,7 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
                         //                result.setLocation(location);
                         //                Log.d("2",result.getLocation().toString());
                         //                mappedRecognitions.add(result);
-                        searchSickName(userid!!,sickname!!)
+//                        searchSickName(userid!!,sickname!!)
                     }
                 } else if (intent.getStringExtra("class") == "red-bean") {
                     if (location != null && result.confidence >= MINIMUM_CONFIDENCE_TF_OD_API) {
@@ -171,10 +171,10 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
                         if (result.title == "Rhizopus") {
                             paint.color = Color.RED
                             sickname = "Rhizopus"
-                        } else if (result.title == "세균잎마름병") {
+                        } else if (result.title == "Bacterial leaf blight") {
                             paint.color = Color.BLUE
                             sickname = "Bacterial leaf blight"
-                        } else if (result.title == "흰가루병") {
+                        } else if (result.title == "Powdery mildew1") {
                             paint.color = Color.GREEN
                             sickname = "Powdery mildew1"
                         } else {
@@ -192,9 +192,15 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
 
                         Log.d("userid","${userid}")
                         Log.d("sickname","${sickname}")
-                        searchSickName(userid!!,sickname!!)
+//                        searchSickName(userid!!,sickname!!)
                     }
                 }
+            }
+            Log.d("disease",disease.toString())
+            val diseaseSetOuter = HashSet(disease)
+            for(i in diseaseSetOuter){
+                Log.d("i",i)
+                searchSickName(userid!!,i)
             }
 //            val diseaseSet = HashSet(disease)
             imageView!!.setImageBitmap(bitmap)
