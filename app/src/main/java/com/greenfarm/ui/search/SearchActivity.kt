@@ -97,6 +97,7 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
                 val intent= Intent(this, TestActivity::class.java)
                 intent.putExtra("image",filepath)
                 intent.putExtra("class",className)
+                intent.putExtra("IsLog",false)
                 startActivity(intent)
             }
             Log.d("end","end")
@@ -273,6 +274,8 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
 
         }
     }
+
+
 
 
     private fun launchImageCrop(uri : Uri?){
