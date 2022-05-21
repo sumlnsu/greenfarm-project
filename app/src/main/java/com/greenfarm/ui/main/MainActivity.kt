@@ -32,10 +32,10 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
 
             // Log and toast
             Log.d("token",token.toString())
-            Log.d("id", intent.getStringExtra("user-id").toString())
+
             val database : FirebaseDatabase = FirebaseDatabase.getInstance()
             val myRef = database.getReference("tokens")
-            myRef.child("user1").setValue(token.toString())
+            myRef.child(intent.getStringExtra("user-id").toString()).setValue(token.toString())
         })
 
         binding.mainSearchBtIv.setOnClickListener{
