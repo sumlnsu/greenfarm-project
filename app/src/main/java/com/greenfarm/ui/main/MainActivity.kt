@@ -21,6 +21,7 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
     val myResponse : MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     override fun initAfterBinding() {
         var token: String? = null
+        var userId = intent.getStringExtra("user-id").toString()
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(MyFirebaseMessagingService.TAG, "Fetching FCM registration token failed", task.exception)
@@ -32,16 +33,17 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
 
             // Log and toast
             Log.d("token",token.toString())
-
+//            Log.d("jwt",intent.getStringExtra("jwt").toString())
             val database : FirebaseDatabase = FirebaseDatabase.getInstance()
             val myRef = database.getReference("tokens")
-            myRef.child(intent.getStringExtra("user-id").toString()).setValue(token.toString())
+            myRef.child(userId).setValue(token.toString())
         })
 
         binding.mainSearchBtIv.setOnClickListener{
             val  intent= Intent(this, SearchActivity::class.java)
+            intent.putExtra("user-id",userId)
+//            intent.putExtra("jwt",intent.getStringExtra("jwt").toString())
             startActivity(intent)
-
         }
 
         binding.mainHistoryBtIv.setOnClickListener{

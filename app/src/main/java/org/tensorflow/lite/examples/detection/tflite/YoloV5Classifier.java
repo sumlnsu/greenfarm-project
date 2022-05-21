@@ -21,6 +21,8 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.util.Log;
 
+import com.greenfarm.ui.TestActivity;
+
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.Tensor;
 import org.tensorflow.lite.examples.detection.env.Logger;

@@ -3,13 +3,10 @@ package com.greenfarm.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.greenfarm.R
-import com.greenfarm.ui.TestActivity
 import android.app.ActivityManager
 import android.graphics.*
 import org.tensorflow.lite.examples.detection.tflite.Classifier.Recognition
 import org.tensorflow.lite.examples.detection.tflite.Classifier
-import org.tensorflow.lite.examples.detection.tracking.MultiBoxTracker
-import org.tensorflow.lite.examples.detection.customview.OverlayView
 import org.tensorflow.lite.examples.detection.tflite.YoloV5Classifier
 import android.widget.Toast
 import android.os.Handler
@@ -22,6 +19,9 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.DataSnapshot
 import com.greenfarm.data.entities.FirebaseViewModel
 import com.google.firebase.database.DatabaseError
+import com.greenfarm.data.nearby.NearbyUser
+import com.greenfarm.data.nearby.NearbyUserResult
+import com.greenfarm.utils.getJwt
 import org.tensorflow.lite.examples.detection.env.Logger
 import org.tensorflow.lite.examples.detection.env.Utils
 import java.io.File
@@ -41,7 +41,9 @@ class TestActivity : AppCompatActivity() {
     private var sourceBitmap: Bitmap? = null
     private var cropBitmap: Bitmap? = null
     var imageView: ImageView? = null
+    var userList = ArrayList<String>()
     var isLog : Boolean? = null
+    val disease: MutableList<String> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
@@ -56,10 +58,10 @@ class TestActivity : AppCompatActivity() {
         if (isLog == false) {
             if (intent.getStringExtra("class") == "sesame") {
                 TF_OD_API_MODEL_FILE = "best-fp16-sesame-s.tflite"
-                TF_OD_API_LABELS_FILE = "file:///android_asset/ctest.txt"
+                TF_OD_API_LABELS_FILE = "file:///android_asset/sesame-label.txt"
             } else if (intent.getStringExtra("class") == "red-bean") {
                 TF_OD_API_MODEL_FILE = "best-fp16-redbean.tflite"
-                TF_OD_API_LABELS_FILE = "file:///android_asset/btest.txt"
+                TF_OD_API_LABELS_FILE = "file:///android_asset/red-bean-label.txt"
             } else if (intent.getStringExtra("class") == "bean") {
                 // 모델 필요
             }
@@ -124,7 +126,7 @@ class TestActivity : AppCompatActivity() {
 //            Intent intent = new Intent(this, SearchActivity.class);
 //            startActivity(intent);
         } else {
-            val disease: MutableList<String> = ArrayList()
+
             for (i in results.indices) {
                 val result = results[i]
                 val location = result.location
@@ -176,41 +178,78 @@ class TestActivity : AppCompatActivity() {
                     }
                 }
             }
-            val diseaseSet = HashSet(disease)
+//            val diseaseSet = HashSet(disease)
             imageView!!.setImageBitmap(bitmap)
             // 서버에 병해충 이름 사진 등 전달
             // 일정 반경 내 유저 아이디 수신
-            val user = arrayOf("user1", "user2")
-            // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴
-            val tokens: MutableList<String?> = ArrayList()
-            val mDatabase: DatabaseReference
-            mDatabase = FirebaseDatabase.getInstance().reference
-            val mUser = mDatabase.child("tokens")
-            mUser.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (i in user.indices) {
-                        Log.d(
-                            "ds", user[i] + snapshot.child(user[i]).getValue(
-                                String::class.java
-                            )
-                        )
-                        tokens.add(snapshot.child(user[i]).getValue(String::class.java))
-                        val firebaseViewModel = FirebaseViewModel(application)
-                        // fcm서버에 해당 토큰에 대해 알림 요청
-                        firebaseViewModel.sendNotification(
-                            tokens[i]!!,
-                            user[i],
-                            "발견된 병해충: $diseaseSet"
-                        )
-                    }
-                    Log.d("tokens", tokens.toString())
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
+            var userId = intent.getStringExtra("user-id").toString()
+            var jwtToken = getJwt().toString()
+            NearbyUser.getNearbyUser(this,jwtToken,userId)
+//            Log.d("near", userList.get(0))
+//            Log.d("jwtToken", jwtToken)
+//            val user = arrayOf("user1", "user2")
+//            // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴
+//            val tokens: MutableList<String?> = ArrayList()
+//            val mDatabase: DatabaseReference = FirebaseDatabase.getInstance().reference
+//            val mUser = mDatabase.child("tokens")
+//            mUser.addValueEventListener(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    for (i in user.indices) {
+//                        Log.d(
+//                            "ds", user[i] + snapshot.child(user[i]).getValue(
+//                                String::class.java
+//                            )
+//                        )
+//                        tokens.add(snapshot.child(user[i]).getValue(String::class.java))
+//                        val firebaseViewModel = FirebaseViewModel(application)
+//                        // fcm서버에 해당 토큰에 대해 알림 요청
+//                        firebaseViewModel.sendNotification(
+//                            tokens[i]!!,
+//                            user[i],
+//                            "발견된 병해충: $diseaseSet"
+//                        )
+//                    }
+//                    Log.d("tokens", tokens.toString())
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {}
+//            })
         }
     }
+    fun setUserList(nearbyUsers: List<String>) {
+        for (i in nearbyUsers){
+            userList.add(i)
+        }
+        Log.d("near", userList.get(0))
+        val user = arrayOf("user1", "user2")
+        val diseaseSet = HashSet(disease)
+        // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴
+        val tokens: MutableList<String?> = ArrayList()
+        val mDatabase: DatabaseReference = FirebaseDatabase.getInstance().reference
+        val mUser = mDatabase.child("tokens")
+        mUser.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (i in user.indices) {
+                    Log.d(
+                        "ds", nearbyUsers[i] + snapshot.child(nearbyUsers[i]).getValue(
+                            String::class.java
+                        )
+                    )
+                    tokens.add(snapshot.child(nearbyUsers[i]).getValue(String::class.java))
+                    val firebaseViewModel = FirebaseViewModel(application)
+                    // fcm서버에 해당 토큰에 대해 알림 요청
+                    firebaseViewModel.sendNotification(
+                        tokens[i]!!,
+                        nearbyUsers[i],
+                        "발견된 병해충: $diseaseSet"
+                    )
+                }
+                Log.d("tokens", tokens.toString())
+            }
 
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
     private fun saveBitmapAsPNGFile(bitmap: Bitmap) {
         val path = File(this.filesDir, "image")
         if (!path.exists()) {

@@ -55,6 +55,11 @@
             android:exported="true">
         </activity>
 
+        <activity android:name=".ui.TestActivity"
+            android:exported="true">
+
+        </activity>
+
         <activity
             android:name=".ui.main.HistoryActivity"
             android:exported="true">

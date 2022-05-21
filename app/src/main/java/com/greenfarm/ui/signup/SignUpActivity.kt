@@ -20,7 +20,15 @@ class SignUpActivity: BaseActivity<ActivitySignupBinding>(ActivitySignupBinding:
         }
         // 회원가입 버튼 클릭시 Event (지금은 Finish지만 신현이한테 명세서 받고, 회원가입 기능 추가)
         binding.signUpBtn.setOnClickListener{
-            signUp()
+            val pw = binding.signUpPasswordEt.text.toString()
+            val pwc = binding.signUpPasswordConfirmEt.text.toString()
+
+            if(pw == pwc){
+                signUp()
+            }
+            else{
+                binding.signUpPasswordError.visibility = View.VISIBLE
+            }
         }
     }
 

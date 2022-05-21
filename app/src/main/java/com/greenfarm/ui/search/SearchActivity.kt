@@ -25,6 +25,7 @@ import com.greenfarm.databinding.ActivityMainBinding
 import com.greenfarm.databinding.ActivitySearchBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.TestActivity
+import com.greenfarm.utils.getJwt
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.*
@@ -94,10 +95,13 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
         binding.uploadStartTv.setOnClickListener{
             Log.d("start","start")
             if(isImageUploaded){
+                var userId = intent.getStringExtra("user-id").toString()
                 val intent= Intent(this, TestActivity::class.java)
                 intent.putExtra("image",filepath)
                 intent.putExtra("class",className)
                 intent.putExtra("IsLog",false)
+                intent.putExtra("user-id",userId)
+//                intent.putExtra("jwt",intent.getStringExtra("jwt"))
                 startActivity(intent)
             }
             Log.d("end","end")

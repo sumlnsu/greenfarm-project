@@ -21,6 +21,6 @@
     <string name="signup_password_hint">비밀번호</string>
     <string name="signup_password_confirm_hint">비밀번호 확인</string>
     <string name="signup_hint">6 ~ 15자리를 입력해주세요</string>
-    <string name="farm_hint">주소지를 입력해주세요.</string>
+    <string name="farm_hint">도로명 주소를 입력해주세요.</string>
 
 </resources>

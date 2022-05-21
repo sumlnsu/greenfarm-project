@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
+import com.greenfarm.ApplicationClass
 import com.greenfarm.data.entities.User
 //import com.greenfarm.data.remote.auth.Auth
 import com.greenfarm.data.remote.auth.AuthService
@@ -18,6 +19,7 @@ import com.greenfarm.ui.MyFirebaseMessagingService
 import com.greenfarm.ui.TestActivity
 import com.greenfarm.ui.main.MainActivity
 import com.greenfarm.ui.signup.SignUpActivity
+import com.greenfarm.utils.getJwt
 import com.greenfarm.utils.saveJwt
 
 class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginView, View.OnClickListener {
@@ -69,8 +71,9 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
         saveJwt(loginResult.jwt)
         val intent= Intent(this, MainActivity::class.java)
-        Log.d("id",id)
         intent.putExtra("user-id",id)
+        Log.d("jwttoken", getJwt().toString())
+//        intent.putExtra("jwt", getJwt().toString())
         finish()
         startActivity(intent)
 
