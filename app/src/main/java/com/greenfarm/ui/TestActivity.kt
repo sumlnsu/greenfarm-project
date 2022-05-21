@@ -19,9 +19,12 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.DataSnapshot
 import com.greenfarm.data.entities.FirebaseViewModel
 import com.google.firebase.database.DatabaseError
+import com.greenfarm.data.entities.SearchSickNameResult
 import com.greenfarm.data.nearby.NearbyUser
 import com.greenfarm.data.nearby.NearbyUserResult
+import com.greenfarm.data.remote.Search.SearchService
 import com.greenfarm.utils.getJwt
+import com.greenfarm.utils.getUserId
 import org.tensorflow.lite.examples.detection.env.Logger
 import org.tensorflow.lite.examples.detection.env.Utils
 import java.io.File
@@ -35,7 +38,7 @@ import java.util.HashSet
 
 //import org.tensorflow.lite.examples.detection.DetectorActivity;
 //import java.util.Random;
-class TestActivity : AppCompatActivity() {
+class TestActivity : AppCompatActivity(),SearchSickNameView {
     private var filepath: String? = null
     private var detector: Classifier? = null
     private var sourceBitmap: Bitmap? = null
@@ -44,6 +47,9 @@ class TestActivity : AppCompatActivity() {
     var userList = ArrayList<String>()
     var isLog : Boolean? = null
     val disease: MutableList<String> = ArrayList()
+    var userid : String? = null
+    var sickname : String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
@@ -54,6 +60,7 @@ class TestActivity : AppCompatActivity() {
 
         imageView = findViewById(R.id.test_iv)
         isLog = intent!!.getBooleanExtra("IsLog",false)
+        userid = getUserId()
 
         if (isLog == false) {
             if (intent.getStringExtra("class") == "sesame") {
@@ -136,8 +143,10 @@ class TestActivity : AppCompatActivity() {
                         Log.d("title", result.title)
                         if (result.title == "세균성점무늬병") {
                             paint.color = Color.RED
+                            sickname = "Bacterial leaf spo"
                         } else if (result.title == "흰가루병") {
                             paint.color = Color.BLUE
+                            sickname = "Powdery mildew2"
                         } else {
                             paint.color = Color.CYAN
                         }
@@ -154,16 +163,20 @@ class TestActivity : AppCompatActivity() {
                         //                result.setLocation(location);
                         //                Log.d("2",result.getLocation().toString());
                         //                mappedRecognitions.add(result);
+                        searchSickName(userid!!,sickname!!)
                     }
                 } else if (intent.getStringExtra("class") == "red-bean") {
                     if (location != null && result.confidence >= MINIMUM_CONFIDENCE_TF_OD_API) {
                         Log.d("title", result.title)
-                        if (result.title == "rhizopus") {
+                        if (result.title == "Rhizopus") {
                             paint.color = Color.RED
+                            sickname = "Rhizopus"
                         } else if (result.title == "세균잎마름병") {
                             paint.color = Color.BLUE
+                            sickname = "Bacterial leaf blight"
                         } else if (result.title == "흰가루병") {
                             paint.color = Color.GREEN
+                            sickname = "Powdery mildew1"
                         } else {
                             paint.color = Color.CYAN
                         }
@@ -175,6 +188,11 @@ class TestActivity : AppCompatActivity() {
                             100 * result.confidence
                         ) else String.format("%.2f", 100 * result.confidence)
                         canvas.drawText(labelString, location.left, location.top, textPaint)
+
+
+                        Log.d("userid","${userid}")
+                        Log.d("sickname","${sickname}")
+                        searchSickName(userid!!,sickname!!)
                     }
                 }
             }
@@ -182,11 +200,10 @@ class TestActivity : AppCompatActivity() {
             imageView!!.setImageBitmap(bitmap)
             // 서버에 병해충 이름 사진 등 전달
             // 일정 반경 내 유저 아이디 수신
-            var userId = intent.getStringExtra("user-id").toString()
-            var jwtToken = getJwt().toString()
-            NearbyUser.getNearbyUser(this,userId)
+            NearbyUser.getNearbyUser(this, userid!!)
         }
     }
+
     fun setUserList(nearbyUsers: List<String>) {
         for (i in nearbyUsers){
             userList.add(i)
@@ -255,5 +272,31 @@ class TestActivity : AppCompatActivity() {
 
         // Minimum detection confidence to track a detection.
         private const val MAINTAIN_ASPECT = true
+    }
+
+    private fun searchSickName(userId : String, sickName : String){
+        SearchService.SearchSickName(this, userId, sickName)
+    }
+
+    override fun onSearchSickNameLoading() {}
+
+    override fun onSearchSickNameSuccess(searchSickNameResult: SearchSickNameResult) {
+        Log.d("cropName","${searchSickNameResult.cropName}")
+        Log.d("sickNameKor","${searchSickNameResult.sickNameKor}")
+        Log.d("developmentCondition","${searchSickNameResult.developmentCondition}")
+        Log.d("preventionMethod","${searchSickNameResult.preventionMethod}")
+        Log.d("infectionRoute","${searchSickNameResult.infectionRoute}")
+        Log.d("symptoms","${searchSickNameResult.symptoms}")
+    }
+
+    override fun onSearchSickNameFailure(code: Int, message: String) {
+        when(code) {
+            2001 -> {
+                Log.d("message",message)
+            }
+            else -> {
+                Log.d("message",message)
+            }
+        }
     }
 }

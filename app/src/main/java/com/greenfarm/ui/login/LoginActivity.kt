@@ -21,6 +21,7 @@ import com.greenfarm.ui.main.MainActivity
 import com.greenfarm.ui.signup.SignUpActivity
 import com.greenfarm.utils.getJwt
 import com.greenfarm.utils.saveJwt
+import com.greenfarm.utils.saveUserId
 
 class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginView, View.OnClickListener {
 
@@ -70,10 +71,9 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         binding.loginLoadingPb.visibility = View.GONE
 
         saveJwt(loginResult.jwt)
+        saveUserId(loginResult.userid)
         val intent= Intent(this, MainActivity::class.java)
-        intent.putExtra("user-id",id)
-        Log.d("jwttoken", getJwt().toString())
-//        intent.putExtra("jwt", getJwt().toString())
+
         finish()
         startActivity(intent)
 

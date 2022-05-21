@@ -12,6 +12,7 @@ import com.greenfarm.data.entities.RetrofitInstance
 import com.greenfarm.databinding.ActivityMainBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.MyFirebaseMessagingService
+import com.greenfarm.utils.getUserId
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -21,7 +22,8 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
     val myResponse : MutableLiveData<Response<ResponseBody>> = MutableLiveData()
     override fun initAfterBinding() {
         var token: String? = null
-        var userId = intent.getStringExtra("user-id").toString()
+        var userId : String ? = null
+        userId = getUserId()
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(MyFirebaseMessagingService.TAG, "Fetching FCM registration token failed", task.exception)
@@ -36,13 +38,11 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
 //            Log.d("jwt",intent.getStringExtra("jwt").toString())
             val database : FirebaseDatabase = FirebaseDatabase.getInstance()
             val myRef = database.getReference("tokens")
-            myRef.child(userId).setValue(token.toString())
+            myRef.child(userId!!).setValue(token.toString())
         })
 
         binding.mainSearchBtIv.setOnClickListener{
             val  intent= Intent(this, SearchActivity::class.java)
-            intent.putExtra("user-id",userId)
-//            intent.putExtra("jwt",intent.getStringExtra("jwt").toString())
             startActivity(intent)
         }
 

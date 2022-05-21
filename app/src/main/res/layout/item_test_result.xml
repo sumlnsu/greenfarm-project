@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/writefirst_top_item_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="20dp"
+    >
+
+    <TextView
+        android:id="@+id/test_result_sickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_regular"
+        android:text="병해충 이름"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_taupe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/test_result_sickname_receive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_regular"
+        android:text="흰가루병"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/test_result_sickname"
+        app:layout_constraintTop_toBottomOf="@id/test_result_sickname"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/test_result_developmentCondition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_regular"
+        android:text="병해충 발생 생태"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_taupe"
+        app:layout_constraintStart_toStartOf="@id/test_result_sickname_receive"
+        app:layout_constraintTop_toBottomOf="@id/test_result_sickname_receive"
+        android:layout_marginTop="30dp"
+        />
+
+    <TextView
+        android:id="@+id/test_result_developmentCondition_recieve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_regular"
+        android:text="병든 식물체의 잔재물에서 자낭각 형태로 월동하여 1차 전염원이 되며 시설재배에서는 분생포자가 공기 전염되어 발병을 계속한다. 흰가루병은 일반적으로 15∼28℃에서많이 발생되며, 32℃ 이상의 고온에서는 병 발생이 억제된다.특히 일조가 부족하고.밤·낮의 온도 차이가 크고, 다비재배를 할 때 병 발생이 많아진다."
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/test_result_developmentCondition"
+        app:layout_constraintTop_toBottomOf="@id/test_result_developmentCondition"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/test_result_symptoms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_regular"
+        android:text="병해충 증상"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_taupe"
+        app:layout_constraintStart_toStartOf="@id/test_result_developmentCondition_recieve"
+        app:layout_constraintTop_toBottomOf="@id/test_result_developmentCondition_recieve"
+        android:layout_marginTop="30dp"
+        />
+
+    <TextView
+        android:id="@+id/test_result_symptoms_recieve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_regular"
+        android:text="잎의 앞뒷면 줄기에 발생한다. 발병 초기에는 잎에 백색의 병반이 나타나면서 잎의 앞 뒷면 잎자루 및 줄기에 전형적인 흰가루 균총이 형성된다. 점차 확대되어 융합되면서 잎 전체，잎자루，줄기 등을 뒤덮는다. 병든 식물체는 오래된 잎부터 누렇게 되어 갈색 또는 암갈색으로 말라죽는다."
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/test_result_symptoms"
+        app:layout_constraintTop_toBottomOf="@id/test_result_symptoms"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/test_result_preventionMethod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_regular"
+        android:text="병해충 방제 방법"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_taupe"
+        app:layout_constraintStart_toStartOf="@id/test_result_symptoms_recieve"
+        app:layout_constraintTop_toBottomOf="@id/test_result_symptoms_recieve"
+        android:layout_marginTop="30dp"
+        />
+
+    <TextView
+        android:id="@+id/test_result_preventionMethod_receive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_regular"
+        android:text="잎의 앞뒷면 줄기에 발생한다. 발병 초기에는 잎에 백색의 병반이 나타나면서 잎의 앞 뒷면 잎자루 및 줄기에 전형적인 흰가루 균총이 형성된다. 점차 확대되어 융합되면서 잎 전체，잎자루，줄기 등을 뒤덮는다. 병든 식물체는 오래된 잎부터 누렇게 되어 갈색 또는 암갈색으로 말라죽는다."
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/test_result_preventionMethod"
+        app:layout_constraintTop_toBottomOf="@id/test_result_preventionMethod"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/test_result_infectionRoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_regular"
+        android:text="병해충 전염 경로"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_taupe"
+        app:layout_constraintStart_toStartOf="@id/test_result_preventionMethod_receive"
+        app:layout_constraintTop_toBottomOf="@id/test_result_preventionMethod_receive"
+        android:layout_marginTop="30dp"
+        />
+
+    <TextView
+        android:id="@+id/test_result_infectionRoute_receive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/suit_regular"
+        android:text="병원세균이 주로 종자 또는 식물체의 잔해, 뿌리에서 가까운 토양에서 겨울을 지나 발병시키고, 잎이 젖어 있을 때 비바람이나 튀어 오르는 빗물에 의하여 주변의 잎으로 퍼져 나간다.\n병원세균의 침입은 기공 같은 자연 개구부나 상처를 통하여 이루어지고 세포와 세포 사이에서 증식하여 발병시킨다."
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/test_result_infectionRoute"
+        app:layout_constraintTop_toBottomOf="@id/test_result_infectionRoute"
+        android:layout_marginTop="10dp"
+        />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/dark_green"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/test_result_infectionRoute_receive"
+        android:layout_marginTop="30dp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
