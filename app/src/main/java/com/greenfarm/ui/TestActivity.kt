@@ -13,12 +13,14 @@ import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.widget.ImageView
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.DataSnapshot
 import com.greenfarm.data.entities.FirebaseViewModel
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.messaging.FirebaseMessaging
 import com.greenfarm.data.entities.SearchSickNameResult
 import com.greenfarm.data.nearby.NearbyUser
 import com.greenfarm.data.nearby.NearbyUserResult
@@ -49,7 +51,7 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
     val disease: MutableList<String> = ArrayList()
     var userid : String? = null
     var sickname : String? = null
-
+    var token : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
@@ -57,6 +59,17 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
         val activityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
         val configurationInfo = activityManager.deviceConfigurationInfo
         val handler = Handler()
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(MyFirebaseMessagingService.TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            token = task.result
+            Log.d("token",token.toString())
+        })
 
         imageView = findViewById(R.id.test_iv)
         isLog = intent!!.getBooleanExtra("IsLog",false)
@@ -221,21 +234,22 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
         val mUser = mDatabase.child("tokens")
         mUser.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                userList.add(userid.toString())
+
                 for (i in nearbyUsers.indices) {
-                    Log.d(
-                        "ds", nearbyUsers[i] + snapshot.child(nearbyUsers[i]).getValue(
-                            String::class.java
-                        )
-                    )
                     tokens.add(snapshot.child(nearbyUsers[i]).getValue(String::class.java))
+                }
+                tokens.add(token.toString())
+                for(i in 0 until tokens.size){
                     val firebaseViewModel = FirebaseViewModel(application)
                     // fcm서버에 해당 토큰에 대해 알림 요청
                     firebaseViewModel.sendNotification(
                         tokens[i]!!,
-                        nearbyUsers[i],
+                        userList[i],
                         "발견된 병해충: $diseaseSet"
                     )
                 }
+
                 Log.d("tokens", tokens.toString())
             }
 

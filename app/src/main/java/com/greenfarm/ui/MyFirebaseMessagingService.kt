@@ -16,6 +16,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.greenfarm.R
 //import com.greenfarm.ui.main.MainActivity
 import com.greenfarm.ui.splash.SplashActivity
+import com.greenfarm.utils.getUserId
 import java.util.*
 import java.util.stream.IntStream.builder
 
@@ -48,13 +49,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val title = remoteMessage.data["title"]!!
             val userId = remoteMessage.data["userId"]!!
             val message = remoteMessage.data["message"]!!
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                sendMessageNotification(title,userId,message)
-            }
-            else{
-                sendNotification(remoteMessage.notification?.title,
-                    remoteMessage.notification?.body!!)
+            if(userId == getUserId()){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    sendMessageNotification(title,userId,message)
+                }
+                else{
+                    sendNotification(remoteMessage.notification?.title,
+                        remoteMessage.notification?.body!!)
+                }
             }
         }
     }
