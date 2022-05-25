@@ -49,6 +49,7 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
     var userList = ArrayList<String>()
     var isLog : Boolean? = null
     val disease: MutableList<String> = ArrayList()
+    val diseaseNoti: MutableList<String?> = ArrayList()
     var userid : String? = null
     var sickname : String? = null
     var token : String? = null
@@ -150,15 +151,17 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
             for (i in results.indices) {
                 val result = results[i]
                 val location = result.location
-                Log.d("l", location.toString())
+                var name: String? = null
                 if (intent.getStringExtra("class") == "sesame") {
                     if (location != null && result.confidence >= MINIMUM_CONFIDENCE_TF_OD_API) {
                         Log.d("title", result.title)
                         if (result.title == "Bacterial leaf spo") {
                             paint.color = Color.RED
+                            name = "세균성점무늬병"
                             sickname = "Bacterial leaf spo"
                         } else if (result.title == "Powdery mildew2") {
                             paint.color = Color.BLUE
+                            name = "흰가루병"
                             sickname = "Powdery mildew2"
                         } else {
                             paint.color = Color.CYAN
@@ -183,16 +186,20 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
                         Log.d("title", result.title)
                         if (result.title == "Rhizopus") {
                             paint.color = Color.RED
+                            name = "리조푸스"
                             sickname = "Rhizopus"
                         } else if (result.title == "Bacterial leaf blight") {
                             paint.color = Color.BLUE
+                            name = "잎마름병"
                             sickname = "Bacterial leaf blight"
                         } else if (result.title == "Powdery mildew1") {
                             paint.color = Color.GREEN
+                            name = "흰가루병"
                             sickname = "Powdery mildew1"
                         } else {
                             paint.color = Color.CYAN
                         }
+                        diseaseNoti.add(name)
                         disease.add(result.title)
                         canvas.drawRect(location, paint)
                         val labelString = if (!TextUtils.isEmpty(result.title)) String.format(
@@ -202,15 +209,13 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
                         ) else String.format("%.2f", 100 * result.confidence)
                         canvas.drawText(labelString, location.left, location.top, textPaint)
 
-
-                        Log.d("userid","${userid}")
-                        Log.d("sickname","${sickname}")
 //                        searchSickName(userid!!,sickname!!)
                     }
                 }
             }
             Log.d("disease",disease.toString())
             val diseaseSetOuter = HashSet(disease)
+
             for(i in diseaseSetOuter){
                 Log.d("i",i)
                 searchSickName(userid!!,i)
@@ -224,21 +229,20 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
     }
 
     fun setUserList(nearbyUsers: List<String>) {
-        for (i in nearbyUsers){
-            userList.add(i)
-        }
-        val diseaseSet = HashSet(disease)
+        val diseaseSet = HashSet(diseaseNoti)
         // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴
         val tokens: MutableList<String?> = ArrayList()
         val mDatabase: DatabaseReference = FirebaseDatabase.getInstance().reference
         val mUser = mDatabase.child("tokens")
         mUser.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                userList.add(userid.toString())
-
                 for (i in nearbyUsers.indices) {
-                    tokens.add(snapshot.child(nearbyUsers[i]).getValue(String::class.java))
+                    if(snapshot.child(nearbyUsers[i]).getValue(String::class.java) != null){
+                        userList.add(nearbyUsers[i])
+                        tokens.add(snapshot.child(nearbyUsers[i]).getValue(String::class.java))
+                    }
                 }
+                userList.add(userid.toString())
                 tokens.add(token.toString())
                 for(i in 0 until tokens.size){
                     val firebaseViewModel = FirebaseViewModel(application)

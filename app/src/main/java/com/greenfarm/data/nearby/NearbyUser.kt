@@ -14,11 +14,16 @@ object NearbyUser {
         getNearbyUserService.getUser(userId).enqueue(object : Callback<NearbyUserResponse> {
             override fun onResponse(call: Call<NearbyUserResponse>, response: Response<NearbyUserResponse>) {
                 Log.d("res",response.message())
-                val resp = response.body()!!
+                if(response.body() == null){
+                    Log.d("body","no near by users")
+                }else{
+                    Log.d("body",response.body().toString())
+                    val resp = response.body()!!
 
-                when(resp.code){
-                    1000-> testActivity.setUserList(resp.result)
+                    when(resp.code){
+                        1000-> testActivity.setUserList(resp.result)
 //                    else -> signUpView.onSignUpFailure(resp.code, resp.message)
+                    }
                 }
             }
 
