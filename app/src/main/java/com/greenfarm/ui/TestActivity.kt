@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.greenfarm.R
 import android.app.ActivityManager
+import android.content.Intent
 import android.graphics.*
 import org.tensorflow.lite.examples.detection.tflite.Classifier.Recognition
 import org.tensorflow.lite.examples.detection.tflite.Classifier
@@ -25,6 +26,7 @@ import com.greenfarm.data.entities.SearchSickNameResult
 import com.greenfarm.data.nearby.NearbyUser
 import com.greenfarm.data.nearby.NearbyUserResult
 import com.greenfarm.data.remote.Search.SearchService
+import com.greenfarm.ui.guideLine.GuidelineActivity
 import com.greenfarm.utils.getJwt
 import com.greenfarm.utils.getUserId
 import org.tensorflow.lite.examples.detection.env.Logger
@@ -143,9 +145,9 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
         textPaint.isAntiAlias = false
         textPaint.alpha = 255
         if (results.size == 0) {
-            // show image guide line
-//            Intent intent = new Intent(this, SearchActivity.class);
-//            startActivity(intent);
+            Log.d("not found","not found")
+            val guideIntent =  Intent(this, GuidelineActivity::class.java)
+            startActivity(guideIntent)
         } else {
 
             for (i in results.indices) {

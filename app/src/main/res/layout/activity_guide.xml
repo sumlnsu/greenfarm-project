@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -8,7 +9,7 @@
         android:id="@+id/guide_bg"
         android:layout_width="match_parent"
         android:layout_height="450dp"
-        android:background="@color/dark_green"
+        android:background="@drawable/guide_image"
         app:layout_constraintTop_toTopOf="parent"
         />
     <TextView
@@ -16,15 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/guide_bg"
-        android:text="병해충이 발견되지 않았습니다. \n\n하나의 잎이 온전하게 보이도록 사진을 찍어주세요."
-        android:textColor="@color/dark_green"
+        android:text="병해충이 발견되지 않았습니다. \n\n위와 같이 하나의 잎이 잘 보이도록 사진을 찍어주세요."
+        android:textColor="@color/error_red"
         android:textAlignment="center"
         android:layout_marginTop="50dp"
         android:textSize="16sp"
         android:textStyle="bold"
         />
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login_bt"
+        android:id="@+id/guide_back_bt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/guide_tv"

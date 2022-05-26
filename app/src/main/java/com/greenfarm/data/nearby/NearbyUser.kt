@@ -16,6 +16,7 @@ object NearbyUser {
                 Log.d("res",response.message())
                 if(response.body() == null){
                     Log.d("body","no near by users")
+                    testActivity.setUserList(emptyList())
                 }else{
                     Log.d("body",response.body().toString())
                     val resp = response.body()!!
