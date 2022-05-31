@@ -181,7 +181,6 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
                         //                result.setLocation(location);
                         //                Log.d("2",result.getLocation().toString());
                         //                mappedRecognitions.add(result);
-//                        searchSickName(userid!!,sickname!!)
                     }
                 } else if (intent.getStringExtra("class") == "red-bean") {
                     if (location != null && result.confidence >= MINIMUM_CONFIDENCE_TF_OD_API) {
@@ -211,7 +210,6 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
                         ) else String.format("%.2f", 100 * result.confidence)
                         canvas.drawText(labelString, location.left, location.top, textPaint)
 
-//                        searchSickName(userid!!,sickname!!)
                     }
                 }
             }
@@ -230,7 +228,7 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
         }
     }
 
-    fun setUserList(nearbyUsers: List<String>) {
+    fun sendMessageToUserList(nearbyUsers: List<String>) {
         val diseaseSet = HashSet(diseaseNoti)
         // 파이어베이스 데이터베이스에서 해당 유저 아이디 토큰 받아옴
         val tokens: MutableList<String?> = ArrayList()

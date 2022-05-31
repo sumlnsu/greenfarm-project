@@ -16,13 +16,13 @@ object NearbyUser {
                 Log.d("res",response.message())
                 if(response.body() == null){
                     Log.d("body","no near by users")
-                    testActivity.setUserList(emptyList())
+                    testActivity.sendMessageToUserList(emptyList())
                 }else{
                     Log.d("body",response.body().toString())
                     val resp = response.body()!!
 
                     when(resp.code){
-                        1000-> testActivity.setUserList(resp.result)
+                        1000-> testActivity.sendMessageToUserList(resp.result)
 //                    else -> signUpView.onSignUpFailure(resp.code, resp.message)
                     }
                 }

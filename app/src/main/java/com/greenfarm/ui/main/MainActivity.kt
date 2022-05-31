@@ -12,6 +12,7 @@ import com.greenfarm.data.entities.RetrofitInstance
 import com.greenfarm.databinding.ActivityMainBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.MyFirebaseMessagingService
+import com.greenfarm.utils.getJwt
 import com.greenfarm.utils.getUserId
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
@@ -35,6 +36,7 @@ class MainActivity: BaseActivity<ActivityMainBinding>(ActivityMainBinding::infla
 
             // Log and toast
             Log.d("token",token.toString())
+            Log.d("jwt", getJwt().toString())
 //            Log.d("jwt",intent.getStringExtra("jwt").toString())
             val database : FirebaseDatabase = FirebaseDatabase.getInstance()
             val myRef = database.getReference("tokens")
