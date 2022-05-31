@@ -14,6 +14,8 @@ import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -26,6 +28,8 @@ import com.greenfarm.data.entities.SearchSickNameResult
 import com.greenfarm.data.nearby.NearbyUser
 import com.greenfarm.data.nearby.NearbyUserResult
 import com.greenfarm.data.remote.Search.SearchService
+import com.greenfarm.databinding.ActivityGuideBinding.inflate
+import com.greenfarm.databinding.ActivityTestBinding
 import com.greenfarm.ui.guideLine.GuidelineActivity
 import com.greenfarm.utils.getJwt
 import com.greenfarm.utils.getUserId
@@ -42,26 +46,36 @@ import java.util.HashSet
 
 //import org.tensorflow.lite.examples.detection.DetectorActivity;
 //import java.util.Random;
-class TestActivity : AppCompatActivity(),SearchSickNameView {
+class TestActivity : AppCompatActivity(), SearchSickNameView {
     private var filepath: String? = null
     private var detector: Classifier? = null
     private var sourceBitmap: Bitmap? = null
     private var cropBitmap: Bitmap? = null
+
+    var sickname : String? = null
+    var sickInformation = ArrayList<SearchSickNameResult>()
+    val sickInformationRVAdapter = SickInformationRVAdapter(sickInformation, this)
+
     var imageView: ImageView? = null
     var userList = ArrayList<String>()
     var isLog : Boolean? = null
     val disease: MutableList<String> = ArrayList()
     val diseaseNoti: MutableList<String?> = ArrayList()
     var userid : String? = null
-    var sickname : String? = null
     var token : String? = null
+
+    lateinit var binding: ActivityTestBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test)
+        binding = ActivityTestBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val activityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
         val configurationInfo = activityManager.deviceConfigurationInfo
         val handler = Handler()
+
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -110,6 +124,10 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
         else {
             // 지난 기록 화면
         }
+        var recyclerView = findViewById<RecyclerView>(R.id.test_result_item_recyclerview)
+
+        recyclerView.layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = sickInformationRVAdapter
     }
 
 
@@ -309,6 +327,9 @@ class TestActivity : AppCompatActivity(),SearchSickNameView {
         Log.d("preventionMethod","${searchSickNameResult.preventionMethod}")
         Log.d("infectionRoute","${searchSickNameResult.infectionRoute}")
         Log.d("symptoms","${searchSickNameResult.symptoms}")
+        sickInformation.add(searchSickNameResult)
+        Log.d("sickinformation","${sickInformation}")
+        sickInformationRVAdapter.notifyDataSetChanged()
     }
 
     override fun onSearchSickNameFailure(code: Int, message: String) {

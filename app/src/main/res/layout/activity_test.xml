@@ -14,8 +14,8 @@
 
                 <ImageView
                     android:id="@+id/test_image_bg"
-                    android:layout_width="310dp"
-                    android:layout_height="310dp"
+                    android:layout_width="320dp"
+                    android:layout_height="320dp"
                     android:src="@drawable/test_image_bg"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -26,22 +26,23 @@
                     android:id="@+id/test_iv"
                     android:layout_width="300dp"
                     android:layout_height="300dp"
-                    android:scaleType="fitStart"
                     app:layout_constraintBottom_toBottomOf="@id/test_image_bg"
                     app:layout_constraintEnd_toEndOf="@id/test_image_bg"
                     app:layout_constraintStart_toStartOf="@id/test_image_bg"
                     app:layout_constraintTop_toTopOf="@id/test_image_bg"
                     tools:srcCompat="@drawable/example_image" />
 
-                <!--<LinearLayout
+                <LinearLayout
                     android:id="@+id/test_result_information_layout"
-                    android:layout_width="380dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
                     app:layout_constraintTop_toBottomOf="@id/test_image_bg"
-                    app:layout_constraintBottom_toBottomOf="@id/test_layout"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/test_radius"
                     android:orientation="vertical">
 
@@ -54,7 +55,7 @@
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             />
 
-                </LinearLayout>-->
+                </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
