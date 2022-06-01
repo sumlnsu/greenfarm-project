@@ -1,17 +1,9 @@
 package com.greenfarm.ui.main
 
-import android.content.Intent
 import android.util.Log
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.greenfarm.R
-import com.greenfarm.data.nearby.NearbyUser
 import com.greenfarm.data.remote.history.HistoryResult
 import com.greenfarm.data.remote.history.HistoryService
 import com.greenfarm.databinding.ActivityHistoryBinding
-import com.greenfarm.databinding.ActivityMainBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.history.HistoryView
 import com.greenfarm.utils.getUserId
@@ -29,9 +21,8 @@ class HistoryActivity: BaseActivity<ActivityHistoryBinding>(ActivityHistoryBindi
         }
     }
 
-
-
     override fun onHistoryLoading() {
+
     }
 
     override fun onHistorySuccess(res: ArrayList<HistoryResult>) {
