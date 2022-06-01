@@ -1,50 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.SearchActivity">
+    tools:context=".ui.history.HistoryActivity">
 
 
-    <ImageView
-        android:id="@+id/history_back_ic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_greenfarm_history_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        />
-
-
-    <TextView
-        android:id="@+id/history_firststep_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/suit_bold"
-        android:text="이전 기록"
-        android:textColor="@color/royal_blue"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/history_back_ic"
-        app:layout_constraintTop_toTopOf="@id/history_back_ic"
-        app:layout_constraintBottom_toBottomOf="@id/history_back_ic"
-        android:layout_marginStart="5dp"
-        />
-
-    <ListView
-        android:id="@+id/listView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/history_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/history_firststep_tv"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/history_back_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_greenfarm_history_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            />
+
+
+        <TextView
+            android:id="@+id/history_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_bold"
+            android:text="이전 기록"
+            android:textColor="@color/royal_blue"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/history_back_ic"
+            app:layout_constraintTop_toTopOf="@id/history_back_ic"
+            app:layout_constraintBottom_toBottomOf="@id/history_back_ic"
+            android:layout_marginStart="5dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/history_information_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/history_tv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/history_item_recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_history_box"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
+
+        </LinearLayout>
 
 
 
@@ -52,4 +71,6 @@
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

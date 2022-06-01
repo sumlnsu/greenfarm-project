@@ -12,6 +12,7 @@ import com.greenfarm.data.entities.RetrofitInstance
 import com.greenfarm.databinding.ActivityMainBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.MyFirebaseMessagingService
+import com.greenfarm.ui.history.HistoryActivity
 import com.greenfarm.utils.getJwt
 import com.greenfarm.utils.getUserId
 import kotlinx.coroutines.launch

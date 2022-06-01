@@ -36,13 +36,19 @@ class SickInformationRVAdapter(var informationlist : ArrayList<SearchSickNameRes
                 if(searchSicknameResult.sickNameKor == null){
                     text = "해당 정보가 존재하지 않습니다."
                 }
-                else{
+                else if(searchSicknameResult.sickNameKor == "null"){
+                    text = "해당 정보가 존재하지 않습니다."
+                }
+                else {
                     text = searchSicknameResult.sickNameKor
                 }
             }
 
             binding.testResultDevelopmentConditionRecieve.apply {
                 if(searchSicknameResult.developmentCondition == null){
+                    text = "해당 정보가 존재하지 않습니다."
+                }
+                else if(searchSicknameResult.developmentCondition == "null"){
                     text = "해당 정보가 존재하지 않습니다."
                 }
                 else{
@@ -54,6 +60,9 @@ class SickInformationRVAdapter(var informationlist : ArrayList<SearchSickNameRes
                 if(searchSicknameResult.symptoms == null){
                     text = "해당 정보가 존재하지 않습니다."
                 }
+                else if(searchSicknameResult.symptoms == "null"){
+                    text = "해당 정보가 존재하지 않습니다."
+                }
                 else {
                     text = searchSicknameResult.symptoms
                 }
@@ -63,6 +72,9 @@ class SickInformationRVAdapter(var informationlist : ArrayList<SearchSickNameRes
                 if(searchSicknameResult.preventionMethod == null){
                     text = "해당 정보가 존재하지 않습니다."
                 }
+                else if(searchSicknameResult.preventionMethod == "null"){
+                    text = "해당 정보가 존재하지 않습니다."
+                }
                 else {
                     text = searchSicknameResult.preventionMethod
                 }
@@ -70,6 +82,9 @@ class SickInformationRVAdapter(var informationlist : ArrayList<SearchSickNameRes
 
             binding.testResultInfectionRouteReceive.apply {
                 if(searchSicknameResult.infectionRoute == null){
+                    text = "해당 정보가 존재하지 않습니다."
+                }
+                else if(searchSicknameResult.infectionRoute == "null"){
                     text = "해당 정보가 존재하지 않습니다."
                 }
                 else {

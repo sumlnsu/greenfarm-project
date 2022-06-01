@@ -14,8 +14,10 @@ import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -76,7 +78,6 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
         val configurationInfo = activityManager.deviceConfigurationInfo
         val handler = Handler()
 
-
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(MyFirebaseMessagingService.TAG, "Fetching FCM registration token failed", task.exception)
@@ -92,6 +93,15 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
         isLog = intent!!.getBooleanExtra("IsLog",false)
         userid = getUserId()
 
+        // Information RecyclerView 설정
+        var recyclerView = findViewById<RecyclerView>(R.id.test_result_item_recyclerview)
+
+        recyclerView.layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = sickInformationRVAdapter
+
+
+        // 기록화면 확인 후 함수 실행
+        // 기록화면 X (Test 화면)
         if (isLog == false) {
             if (intent.getStringExtra("class") == "sesame") {
                 TF_OD_API_MODEL_FILE = "best-fp16-sesame-s.tflite"
@@ -122,13 +132,21 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
             System.err.println(configurationInfo.reqGlEsVersion >= 0x30000)
             System.err.println(String.format("%X", configurationInfo.reqGlEsVersion))
         }
-        else {
-            // 지난 기록 화면
-        }
-        var recyclerView = findViewById<RecyclerView>(R.id.test_result_item_recyclerview)
 
-        recyclerView.layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = sickInformationRVAdapter
+        // 지난 기록 화면
+        else {
+            Glide.with(this).load(intent.getStringExtra("image")).into(binding.testIv)
+            Log.d("images","${intent.getStringExtra("image")}")
+
+            val searchSickNameResult : SearchSickNameResult = SearchSickNameResult()
+            searchSickNameResult.sickNameKor = intent.getStringExtra("sickName").toString()
+            searchSickNameResult.symptoms = intent.getStringExtra("symptoms").toString()
+            searchSickNameResult.infectionRoute = intent.getStringExtra("infectionRoute").toString()
+            searchSickNameResult.developmentCondition = intent.getStringExtra("developmentCondition").toString()
+            searchSickNameResult.preventionMethod = intent.getStringExtra("preventionMethod").toString()
+            sickInformation.add(searchSickNameResult)
+            sickInformationRVAdapter.notifyDataSetChanged()
+        }
     }
 
 

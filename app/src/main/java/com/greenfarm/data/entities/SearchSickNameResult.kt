@@ -3,10 +3,10 @@ package com.greenfarm.data.entities
 import com.google.gson.annotations.SerializedName
 
 data class SearchSickNameResult(
-    @SerializedName("cropName") val cropName: String,
-    @SerializedName("sickNameKor") val sickNameKor: String,
-    @SerializedName("developmentCondition") val developmentCondition: String,
-    @SerializedName("preventionMethod") val preventionMethod: String,
-    @SerializedName("symptoms") val symptoms: String,
-    @SerializedName("infectionRoute") val infectionRoute: String
+    @SerializedName("cropName") val cropName: String = " ",
+    @SerializedName("sickNameKor") var sickNameKor: String= " ",
+    @SerializedName("developmentCondition") var developmentCondition: String= " ",
+    @SerializedName("preventionMethod") var preventionMethod: String= " ",
+    @SerializedName("symptoms") var symptoms: String= " ",
+    @SerializedName("infectionRoute") var infectionRoute: String= " "
 )

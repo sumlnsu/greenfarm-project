@@ -20,7 +20,6 @@ object HistoryService {
                 if(response.body() == null){
                     Log.d("body","have no history")
                 }else{
-                    Log.d("body",response.body().toString())
                     val resp = response.body()!!
 
                     when(resp.code){

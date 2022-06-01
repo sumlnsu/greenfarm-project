@@ -63,7 +63,7 @@
             android:name=".ui.guideLine.GuidelineActivity"
             android:exported="true"/>
         <activity
-            android:name=".ui.main.HistoryActivity"
+            android:name=".ui.history.HistoryActivity"
             android:exported="true">
         </activity>
 
