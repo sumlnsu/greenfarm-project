@@ -106,6 +106,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
                 Utils.getBitmapFromAsset(this@TestActivity, intent.getStringExtra("image"))
             cropBitmap = Utils.processBitmap(sourceBitmap, TF_OD_API_INPUT_SIZE)
             imageView!!.setImageBitmap(cropBitmap)
+
             initBox()
             Thread {
                 val startTime = System.currentTimeMillis()
@@ -234,13 +235,15 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
             Log.d("disease",disease.toString())
             val diseaseSetOuter = HashSet(disease)
 
+            saveBitmapAsPNGFile(bitmap)
+
+            // 서버에 병해충 이름 사진 등 전달
             for(i in diseaseSetOuter){
                 Log.d("i",i)
-                searchSickName(userid!!,i)
+                searchSickName(userid!!,i, filepath!!)
             }
 //            val diseaseSet = HashSet(disease)
             imageView!!.setImageBitmap(bitmap)
-            // 서버에 병해충 이름 사진 등 전달
             // 일정 반경 내 유저 아이디 수신
             NearbyUser.getNearbyUser(this, userid!!)
         }
@@ -278,6 +281,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
             override fun onCancelled(error: DatabaseError) {}
         })
     }
+
     private fun saveBitmapAsPNGFile(bitmap: Bitmap) {
         val path = File(this.filesDir, "image")
         if (!path.exists()) {
@@ -293,6 +297,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
             imageFile!!.close()
             filepath = file.absolutePath.toString()
         } catch (var7: Exception) {
+
         }
     }
 
@@ -314,8 +319,9 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
         private const val MAINTAIN_ASPECT = true
     }
 
-    private fun searchSickName(userId : String, sickName : String){
-        SearchService.SearchSickName(this, userId, sickName)
+    private fun searchSickName(userId : String, sickName : String, filepath : String){
+        val file = File(filepath)
+        SearchService.SearchSickName(this, userId, sickName, file)
     }
 
     override fun onSearchSickNameLoading() {}

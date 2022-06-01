@@ -8,17 +8,24 @@ import com.greenfarm.ui.SearchSickNameView
 import com.greenfarm.ui.login.LoginView
 import com.greenfarm.ui.signup.SignUpView
 import com.greenfarm.ui.splash.SplashView
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 object SearchService {
-    fun SearchSickName(searchSickNameView: SearchSickNameView ,userId : String, sickName : String) {
+    fun SearchSickName(searchSickNameView: SearchSickNameView ,userId : String, sickName : String, file : File) {
         val searchService = retrofit.create(SearchRetrofitInterface::class.java)
+        var requestFile : RequestBody = file.asRequestBody("image/png".toMediaTypeOrNull())
+        var body : MultipartBody.Part = MultipartBody.Part.createFormData("images", file.name, requestFile)
 
         searchSickNameView.onSearchSickNameLoading()
 
-        searchService.SearchSickName(userId, sickName).enqueue(object : Callback<SearchResponse> {
+        searchService.SearchSickName(userId, sickName, body).enqueue(object : Callback<SearchResponse> {
             override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
 
                 val resp = response.body()!!

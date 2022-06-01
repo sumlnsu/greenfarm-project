@@ -1,15 +1,16 @@
 package com.greenfarm.data.remote.Search
 
 import com.greenfarm.data.entities.User
+import okhttp3.MultipartBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface SearchRetrofitInterface {
+    @Multipart
     @POST("/bug/search")
-    fun SearchSickName(@Query("user_id") userId : String,
-                       @Query("sickName") sickName : String,
+    fun SearchSickName(
+        @Query("user_id") userId : String,
+        @Query("sickName") sickName : String,
+        @Part images : MultipartBody.Part
     ): Call<SearchResponse>
 }
