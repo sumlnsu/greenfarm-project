@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.SearchActivity">
 
+
     <ImageView
         android:id="@+id/history_back_ic"
         android:layout_width="wrap_content"
@@ -16,6 +17,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         />
+
 
     <TextView
         android:id="@+id/history_firststep_tv"
@@ -43,6 +45,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         />
+
+
+
 
 
 

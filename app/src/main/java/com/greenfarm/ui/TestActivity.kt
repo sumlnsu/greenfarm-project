@@ -26,9 +26,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.messaging.FirebaseMessaging
 import com.greenfarm.data.entities.SearchSickNameResult
 import com.greenfarm.data.nearby.NearbyUser
+import com.greenfarm.data.nearby.NearbyUserResult
 import com.greenfarm.data.remote.Search.SearchService
+import com.greenfarm.databinding.ActivityGuideBinding.inflate
 import com.greenfarm.databinding.ActivityTestBinding
 import com.greenfarm.ui.guideLine.GuidelineActivity
+import com.greenfarm.utils.getJwt
 import com.greenfarm.utils.getUserId
 import org.tensorflow.lite.examples.detection.env.Logger
 import org.tensorflow.lite.examples.detection.env.Utils
@@ -103,13 +106,13 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
                 Utils.getBitmapFromAsset(this@TestActivity, intent.getStringExtra("image"))
             cropBitmap = Utils.processBitmap(sourceBitmap, TF_OD_API_INPUT_SIZE)
             imageView!!.setImageBitmap(cropBitmap)
-            saveBitmapAsPNGFile(cropBitmap!!)
+
             initBox()
             Thread {
                 val startTime = System.currentTimeMillis()
                 val results = detector!!.recognizeImage(cropBitmap)
                 handler.post {
-                    handleResult(cropBitmap, results,filepath)
+                    handleResult(cropBitmap, results)
                     val endTime = System.currentTimeMillis()
                     Log.d("Model running time", (endTime - startTime).toString())
                     // 모델 실행시간 약 0.9 ~ 1초
@@ -149,7 +152,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
         }
     }
 
-    private fun handleResult(bitmap: Bitmap?, results: List<Recognition>, filepath: String?,) {
+    private fun handleResult(bitmap: Bitmap?, results: List<Recognition>) {
         val canvas = Canvas(bitmap!!)
         val paint = Paint()
         val textPaint = Paint()
@@ -232,14 +235,15 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
             Log.d("disease",disease.toString())
             val diseaseSetOuter = HashSet(disease)
 
+            saveBitmapAsPNGFile(bitmap)
+
+            // 서버에 병해충 이름 사진 등 전달
             for(i in diseaseSetOuter){
                 Log.d("i",i)
-                // 시간 계산 후 파라미터로 넘겨준다.
-                searchSickName(userid!!,i)
+                searchSickName(userid!!,i, filepath!!)
             }
 //            val diseaseSet = HashSet(disease)
             imageView!!.setImageBitmap(bitmap)
-            // 서버에 병해충 이름 사진 등 전달
             // 일정 반경 내 유저 아이디 수신
             NearbyUser.getNearbyUser(this, userid!!)
         }
@@ -277,6 +281,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
             override fun onCancelled(error: DatabaseError) {}
         })
     }
+
     private fun saveBitmapAsPNGFile(bitmap: Bitmap) {
         val path = File(this.filesDir, "image")
         if (!path.exists()) {
@@ -292,6 +297,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
             imageFile!!.close()
             filepath = file.absolutePath.toString()
         } catch (var7: Exception) {
+
         }
     }
 
@@ -313,8 +319,9 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
         private const val MAINTAIN_ASPECT = true
     }
 
-    private fun searchSickName(userId : String, sickName : String){
-        SearchService.SearchSickName(this, userId, sickName)
+    private fun searchSickName(userId : String, sickName : String, filepath : String){
+        val file = File(filepath)
+        SearchService.SearchSickName(this, userId, sickName, file)
     }
 
     override fun onSearchSickNameLoading() {}
