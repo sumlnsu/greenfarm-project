@@ -18,14 +18,14 @@ import retrofit2.Response
 import java.io.File
 
 object SearchService {
-    fun SearchSickName(searchSickNameView: SearchSickNameView ,userId : String, sickName : String, file : File) {
+    fun SearchSickName(searchSickNameView: SearchSickNameView ,userId : String, sickName : String, file : File, currentTime:String) {
         val searchService = retrofit.create(SearchRetrofitInterface::class.java)
         var requestFile : RequestBody = file.asRequestBody("image/png".toMediaTypeOrNull())
         var body : MultipartBody.Part = MultipartBody.Part.createFormData("images", file.name, requestFile)
 
         searchSickNameView.onSearchSickNameLoading()
 
-        searchService.SearchSickName(userId, sickName, body).enqueue(object : Callback<SearchResponse> {
+        searchService.SearchSickName(userId, sickName, currentTime, body).enqueue(object : Callback<SearchResponse> {
             override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
 
                 val resp = response.body()!!

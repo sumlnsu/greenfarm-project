@@ -1,12 +1,14 @@
 package com.greenfarm.ui.main
 
 import android.util.Log
+import com.greenfarm.data.entities.SearchSickNameResult
 import com.greenfarm.data.remote.history.HistoryResult
 import com.greenfarm.data.remote.history.HistoryService
 import com.greenfarm.databinding.ActivityHistoryBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.history.HistoryView
 import com.greenfarm.utils.getUserId
+import java.io.Serializable
 
 class HistoryActivity: BaseActivity<ActivityHistoryBinding>(ActivityHistoryBinding::inflate),HistoryView {
 
@@ -15,10 +17,13 @@ class HistoryActivity: BaseActivity<ActivityHistoryBinding>(ActivityHistoryBindi
         var userId = getUserId()
         Log.d("userid",userId.toString())
         HistoryService.getHistories(this, userId.toString())
-
         binding.historyBackIc.setOnClickListener{
             finish()
         }
+
+//        val list: ArrayList<SearchSickNameResult> = ArrayList()
+//        list.add(SearchSickNameResult("test","test","test","test","test"))
+//        intent.putExtra("LIST", list as Serializable)
     }
 
     override fun onHistoryLoading() {

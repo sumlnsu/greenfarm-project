@@ -94,7 +94,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
 
         if (isLog == false) {
             if (intent.getStringExtra("class") == "sesame") {
-                TF_OD_API_MODEL_FILE = "best-fp16-sesame-s.tflite"
+                TF_OD_API_MODEL_FILE = "sesame_annot_yolov5s.tflite"
                 TF_OD_API_LABELS_FILE = "file:///android_asset/sesame-label.txt"
             } else if (intent.getStringExtra("class") == "red-bean") {
                 TF_OD_API_MODEL_FILE = "best-fp16-redbean.tflite"
@@ -238,9 +238,13 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
             saveBitmapAsPNGFile(bitmap)
 
             // 서버에 병해충 이름 사진 등 전달
+
+            var time: Long = System.currentTimeMillis()
+            var currentTime: String = time.toString()
             for(i in diseaseSetOuter){
                 Log.d("i",i)
-                searchSickName(userid!!,i, filepath!!)
+                Log.d("i",currentTime)
+//                searchSickName(userid!!,i, filepath!!,currentTime)
             }
 //            val diseaseSet = HashSet(disease)
             imageView!!.setImageBitmap(bitmap)
@@ -319,9 +323,10 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
         private const val MAINTAIN_ASPECT = true
     }
 
-    private fun searchSickName(userId : String, sickName : String, filepath : String){
+    private fun searchSickName(userId : String, sickName : String, filepath : String, currentTime: String){
         val file = File(filepath)
-        SearchService.SearchSickName(this, userId, sickName, file)
+        SearchService.SearchSickName(this, userId, sickName, file,currentTime)
+
     }
 
     override fun onSearchSickNameLoading() {}
