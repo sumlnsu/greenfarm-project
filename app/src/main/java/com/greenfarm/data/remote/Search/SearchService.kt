@@ -18,7 +18,7 @@ import retrofit2.Response
 import java.io.File
 
 object SearchService {
-    fun SearchSickName(searchSickNameView: SearchSickNameView ,userId : String, sickName : String, file : File, currentTime:String) {
+    fun SearchSickName(searchSickNameView: SearchSickNameView ,userId : String, sickName : String, file : File, currentTime:Long) {
         val searchService = retrofit.create(SearchRetrofitInterface::class.java)
         var requestFile : RequestBody = file.asRequestBody("image/png".toMediaTypeOrNull())
         var body : MultipartBody.Part = MultipartBody.Part.createFormData("images", file.name, requestFile)
