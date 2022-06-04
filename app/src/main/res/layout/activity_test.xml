@@ -12,24 +12,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/test_image_bg"
-                    android:layout_width="320dp"
-                    android:layout_height="320dp"
-                    android:src="@drawable/test_image_bg"
+                <TextView
+                    android:id="@+id/test_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="병해충 검출 결과"
+                    android:fontFamily="@font/suit_bold"
+                    android:textSize="18sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/dark_green"
+                    />
 
                 <ImageView
                     android:id="@+id/test_iv"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    app:layout_constraintBottom_toBottomOf="@id/test_image_bg"
-                    app:layout_constraintEnd_toEndOf="@id/test_image_bg"
-                    app:layout_constraintStart_toStartOf="@id/test_image_bg"
-                    app:layout_constraintTop_toTopOf="@id/test_image_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="330dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/test_tv"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="20dp"
                     tools:srcCompat="@drawable/example_image" />
 
                 <LinearLayout
@@ -37,7 +43,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
-                    app:layout_constraintTop_toBottomOf="@id/test_image_bg"
+                    app:layout_constraintTop_toBottomOf="@id/test_iv"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
