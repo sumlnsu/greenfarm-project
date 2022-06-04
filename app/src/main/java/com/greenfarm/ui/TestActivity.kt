@@ -11,6 +11,7 @@ import org.tensorflow.lite.examples.detection.tflite.Classifier
 import org.tensorflow.lite.examples.detection.tflite.YoloV5Classifier
 import android.widget.Toast
 import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
 import android.widget.ImageView
@@ -257,15 +258,19 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
             saveBitmapAsPNGFile(bitmap)
 
             // 서버에 병해충 이름 사진 등 전달
-
             var currentTime: Long = System.currentTimeMillis()
             for(i in diseaseSetOuter){
                 Log.d("i",i)
                 Log.d("i",currentTime.toString())
-                searchSickName(userid!!,i, filepath!!,currentTime)
+                Log.d("disease", "${diseaseSetOuter}")
+                Handler(Looper.getMainLooper()).postDelayed({
+                    searchSickName(userid!!, i, filepath!!, currentTime)
+                }, 300)
             }
-//            val diseaseSet = HashSet(disease)
+
+            // 이미지뷰에 사진 넣기
             imageView!!.setImageBitmap(bitmap)
+
             // 일정 반경 내 유저 아이디 수신
             NearbyUser.getNearbyUser(this, userid!!)
         }
@@ -343,8 +348,9 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
 
     private fun searchSickName(userId : String, sickName : String, filepath : String, currentTime: Long){
         val file = File(filepath)
-        SearchService.SearchSickName(this, userId, sickName, file,currentTime)
-
+        Handler(Looper.getMainLooper()).postDelayed({
+            SearchService.SearchSickName(this, userId, sickName, file, currentTime)
+        }, 300)
     }
 
     override fun onSearchSickNameLoading() {}

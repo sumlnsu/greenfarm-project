@@ -42,6 +42,24 @@ class SickInformationRVAdapter(var informationlist : ArrayList<SearchSickNameRes
                 else {
                     text = searchSicknameResult.sickNameKor
                 }
+                if (searchSicknameResult.sickNameKor == "세균성점무늬병"){
+                    setTextColor(Color.RED)
+                }
+                else if (searchSicknameResult.sickNameKor == "흰가루병"){
+                    setTextColor(Color.BLUE)
+                }
+                else if (searchSicknameResult.sickNameKor == "리조푸스"){
+                    setTextColor(Color.RED)
+                }
+                else if (searchSicknameResult.sickNameKor == "잎마름병"){
+                    setTextColor(Color.BLUE)
+                }
+                else if (searchSicknameResult.sickNameKor == "Powdery mildew1"){
+                    setTextColor(Color.GREEN)
+                }
+                else {
+                    setTextColor(Color.CYAN)
+                }
             }
 
             binding.testResultDevelopmentConditionRecieve.apply {
