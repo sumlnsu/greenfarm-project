@@ -4,17 +4,21 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.startActivity
+import java.text.SimpleDateFormat;
 import androidx.recyclerview.widget.RecyclerView
 import com.greenfarm.data.entities.SearchSickNameResult
 import com.greenfarm.data.remote.history.HistoryResult
 import com.greenfarm.databinding.ItemHistoryBoxBinding
 import com.greenfarm.databinding.ItemTestResultBinding
 import com.greenfarm.ui.TestActivity
+import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.coroutines.coroutineContext
 
@@ -34,6 +38,7 @@ class HistoryInformationRVAdapter(var informationlist : ArrayList<HistoryResult>
 
     override fun getItemCount(): Int = informationlist.size
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: HistoryInformationRVAdapter.ViewHolder, position: Int) {
         holder.bind(informationlist[position], position)
         holder.setIsRecyclable(false)
@@ -47,6 +52,7 @@ class HistoryInformationRVAdapter(var informationlist : ArrayList<HistoryResult>
 
 
     inner class ViewHolder(val binding: ItemHistoryBoxBinding): RecyclerView.ViewHolder(binding.root){
+        @RequiresApi(Build.VERSION_CODES.N)
         fun bind(historyResult: HistoryResult, position: Int){
             if(historyResult.cropName == "콩"){
                 binding.historyBoxBeanIv.visibility=View.VISIBLE
@@ -66,7 +72,12 @@ class HistoryInformationRVAdapter(var informationlist : ArrayList<HistoryResult>
 
             binding.historyBoxTimeTv.apply {
                 // Time
-                text = "2022.06.02"
+                if(historyResult.currentTime.toLong() > 0){
+                    var mil  = Date(historyResult.currentTime.toLong())
+                    var dataFormat = SimpleDateFormat("yyyy-MM-dd", Locale("ko", "KR"))
+                    text = dataFormat.format(mil).toString()
+                }
+
             }
 
             binding.historyBoxSickTv.apply {

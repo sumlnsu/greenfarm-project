@@ -9,5 +9,6 @@ data class HistoryResult(
     @SerializedName("preventionMethod") val preventionMethod: String,
     @SerializedName("symptoms") val symptoms: String,
     @SerializedName("infectionRoute") val infectionRoute: String,
-    @SerializedName("imgPath") val imgPath: String
+    @SerializedName("imgPath") val imgPath: String,
+    @SerializedName("search_time") val currentTime: String
 )

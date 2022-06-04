@@ -46,7 +46,7 @@ class SickInformationRVAdapter(var informationlist : ArrayList<SearchSickNameRes
                     setTextColor(Color.RED)
                 }
                 else if (searchSicknameResult.sickNameKor == "흰가루병"){
-                    setTextColor(Color.BLUE)
+                    setTextColor(Color.GREEN)
                 }
                 else if (searchSicknameResult.sickNameKor == "리조푸스"){
                     setTextColor(Color.RED)

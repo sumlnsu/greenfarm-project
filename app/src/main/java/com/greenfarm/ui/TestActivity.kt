@@ -176,8 +176,8 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
         val paint = Paint()
         val textPaint = Paint()
         paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 1.0f
-        textPaint.textSize = 20f
+        paint.strokeWidth = 1.5f
+        textPaint.textSize = 25f
         textPaint.color = Color.BLUE
         textPaint.style = Paint.Style.FILL_AND_STROKE
         textPaint.isAntiAlias = false
@@ -200,7 +200,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
                             name = "세균성점무늬병"
                             sickname = "Bacterial leaf spo"
                         } else if (result.title == "Powdery mildew2") {
-                            paint.color = Color.BLUE
+                            paint.color = Color.GREEN
                             name = "흰가루병"
                             sickname = "Powdery mildew2"
                         } else {
@@ -210,11 +210,10 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
                         disease.add(result.title)
                         canvas.drawRect(location, paint)
                         val labelString = if (!TextUtils.isEmpty(result.title)) String.format(
-                            "%s %.2f",
-                            result.title,
+                            "%.2f",
                             100 * result.confidence
                         ) else String.format("%.2f", 100 * result.confidence)
-                        canvas.drawText(labelString, location.left, location.top, textPaint)
+                        canvas.drawText("$labelString%", (location.left+location.right)/2, location.top, textPaint)
                         //                cropToFrameTransform.mapRect(location);
                         //
                         //                result.setLocation(location);
@@ -243,11 +242,10 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
                         disease.add(result.title)
                         canvas.drawRect(location, paint)
                         val labelString = if (!TextUtils.isEmpty(result.title)) String.format(
-                            "%s %.2f",
-                            result.title,
-                            100 * result.confidence
+                            "%.2f",
+                            100 * result.confidence,
                         ) else String.format("%.2f", 100 * result.confidence)
-                        canvas.drawText(labelString, location.left, location.top, textPaint)
+                        canvas.drawText("$labelString%", (location.left+location.right)/2, location.top, textPaint)
 
                     }
                 }
@@ -259,13 +257,21 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
 
             // 서버에 병해충 이름 사진 등 전달
             var currentTime: Long = System.currentTimeMillis()
+            var cnt = 0
             for(i in diseaseSetOuter){
                 Log.d("i",i)
                 Log.d("i",currentTime.toString())
                 Log.d("disease", "${diseaseSetOuter}")
-                Handler(Looper.getMainLooper()).postDelayed({
+                if(cnt == 0){
                     searchSickName(userid!!, i, filepath!!, currentTime)
-                }, 300)
+                    cnt+=1
+                }else{
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        Log.d("start","start req")
+                        searchSickName(userid!!, i, filepath!!, currentTime)
+                    }, 200)
+                }
+                Log.d("start","end")
             }
 
             // 이미지뷰에 사진 넣기
@@ -335,7 +341,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
     }
 
     companion object {
-        const val MINIMUM_CONFIDENCE_TF_OD_API = 0.5f
+        const val MINIMUM_CONFIDENCE_TF_OD_API = 0.2f
         private var TF_OD_API_MODEL_FILE = "best-fp16-sesame-m.tflite"
         private var TF_OD_API_LABELS_FILE = "file:///android_asset/coco.txt"
         private val LOGGER = Logger()

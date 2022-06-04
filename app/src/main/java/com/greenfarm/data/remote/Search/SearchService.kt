@@ -3,6 +3,7 @@ package com.greenfarm.data.remote.Search
 import android.util.Log
 import com.greenfarm.ApplicationClass.Companion.TAG
 import com.greenfarm.ApplicationClass.Companion.retrofit
+import com.greenfarm.data.entities.SearchSickNameResult
 import com.greenfarm.data.entities.User
 import com.greenfarm.ui.SearchSickNameView
 import com.greenfarm.ui.login.LoginView
@@ -24,16 +25,22 @@ object SearchService {
         var body : MultipartBody.Part = MultipartBody.Part.createFormData("images", file.name, requestFile)
 
         searchSickNameView.onSearchSickNameLoading()
-
+        Log.d("test","${userId}, ${sickName}, ${file}, ${currentTime}")
         searchService.SearchSickName(userId, sickName, currentTime, body).enqueue(object : Callback<SearchResponse> {
             override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                 Log.d("성공1","성공!")
-                val resp = response.body()!!
-                Log.d("성공2","성공")
 
-                when(resp.code){
-                    1000 -> searchSickNameView.onSearchSickNameSuccess(resp.result)
-                    else -> searchSickNameView.onSearchSickNameFailure(resp.code, resp.message)
+                if(response.body() == null) {
+                    Log.d("body","body is null")
+                    val test = SearchSickNameResult()
+                    searchSickNameView.onSearchSickNameSuccess(test)
+                }else{
+                    Log.d("성공2","성공")
+                    val resp = response.body()!!
+                    when(resp.code){
+                        1000 -> searchSickNameView.onSearchSickNameSuccess(resp.result)
+                        else -> searchSickNameView.onSearchSickNameFailure(resp.code, resp.message)
+                    }
                 }
             }
 
