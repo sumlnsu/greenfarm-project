@@ -104,7 +104,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
         // 기록화면 X (Test 화면)
         if (isLog == false) {
             if (intent.getStringExtra("class") == "sesame") {
-                TF_OD_API_MODEL_FILE = "best-fp16-sesame-s.tflite"
+                TF_OD_API_MODEL_FILE = "sesame_annot_yolov5s.tflite"
                 TF_OD_API_LABELS_FILE = "file:///android_asset/sesame-label.txt"
             } else if (intent.getStringExtra("class") == "red-bean") {
                 TF_OD_API_MODEL_FILE = "best-fp16-redbean.tflite"
@@ -205,6 +205,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
                         } else {
                             paint.color = Color.CYAN
                         }
+                        diseaseNoti.add(name)
                         disease.add(result.title)
                         canvas.drawRect(location, paint)
                         val labelString = if (!TextUtils.isEmpty(result.title)) String.format(
@@ -256,9 +257,12 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
             saveBitmapAsPNGFile(bitmap)
 
             // 서버에 병해충 이름 사진 등 전달
+
+            var currentTime: Long = System.currentTimeMillis()
             for(i in diseaseSetOuter){
                 Log.d("i",i)
-                searchSickName(userid!!,i, filepath!!)
+                Log.d("i",currentTime.toString())
+                searchSickName(userid!!,i, filepath!!,currentTime)
             }
 //            val diseaseSet = HashSet(disease)
             imageView!!.setImageBitmap(bitmap)
@@ -328,7 +332,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
     companion object {
         const val MINIMUM_CONFIDENCE_TF_OD_API = 0.5f
         private var TF_OD_API_MODEL_FILE = "best-fp16-sesame-m.tflite"
-        private var TF_OD_API_LABELS_FILE = "file:///android_asset/ctest.txt"
+        private var TF_OD_API_LABELS_FILE = "file:///android_asset/coco.txt"
         private val LOGGER = Logger()
         const val TF_OD_API_INPUT_SIZE = 640
         private const val TF_OD_API_IS_QUANTIZED = false
@@ -337,9 +341,10 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
         private const val MAINTAIN_ASPECT = true
     }
 
-    private fun searchSickName(userId : String, sickName : String, filepath : String){
+    private fun searchSickName(userId : String, sickName : String, filepath : String, currentTime: Long){
         val file = File(filepath)
-        SearchService.SearchSickName(this, userId, sickName, file)
+        SearchService.SearchSickName(this, userId, sickName, file,currentTime)
+
     }
 
     override fun onSearchSickNameLoading() {}

@@ -13,7 +13,6 @@ object NearbyUser {
 
         getNearbyUserService.getUser(userId).enqueue(object : Callback<NearbyUserResponse> {
             override fun onResponse(call: Call<NearbyUserResponse>, response: Response<NearbyUserResponse>) {
-                Log.d("res",response.message())
                 if(response.body() == null){
                     Log.d("body","no near by users")
                     testActivity.sendMessageToUserList(emptyList())

@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.Person
@@ -40,7 +41,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // 서버에서 직접 보냈을 때
         if(remoteMessage.notification != null){
-            sendNotification(remoteMessage.notification?.title,
+            sendNotification(remoteMessage.notification?.title, "test",
                 remoteMessage.notification?.body!!)
         }
 
@@ -54,8 +55,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     sendMessageNotification(title,userId,message)
                 }
                 else{
-                    sendNotification(remoteMessage.notification?.title,
-                        remoteMessage.notification?.body!!)
+                    sendNotification(title,userId,message)
                 }
             }
         }
@@ -63,17 +63,29 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
     // 서버에서 직접 보냈을 때
-    private fun sendNotification(title: String?, body: String){
+    private fun sendNotification(title: String?, userId: String,body: String){
         val intent = Intent(this, SplashActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) // 액티비티 중복 생성 방지
         val pendingIntent = PendingIntent.getActivity(this, 0 , intent,
             PendingIntent.FLAG_ONE_SHOT) // 일회성
+        val user: androidx.core.app.Person = Person.Builder()
+            .setName(userId)
+            .setIcon(IconCompat.createWithResource(this,R.drawable.ic_greenfarm_splash))
+            .build()
 
+        val message = NotificationCompat.MessagingStyle.Message(
+            body,
+            System.currentTimeMillis(),
+            user
+        )
+        val messageStyle = NotificationCompat.MessagingStyle(user)
+            .addMessage(message)
         val channelId = "channel" // 채널 아이디
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION) // 소리
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setContentTitle(title) // 제목
-            .setContentText(body) // 내용
+            .setContentText(body)
+            .setStyle(messageStyle)// 내용
             .setSmallIcon(R.drawable.ic_greenfarm_splash) // 아이콘
             .setAutoCancel(true)
             .setSound(defaultSoundUri)

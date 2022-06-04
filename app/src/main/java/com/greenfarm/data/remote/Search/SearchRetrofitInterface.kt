@@ -11,6 +11,7 @@ interface SearchRetrofitInterface {
     fun SearchSickName(
         @Query("user_id") userId : String,
         @Query("sickName") sickName : String,
+        @Query("search_time") currentTime : Long,
         @Part images : MultipartBody.Part
     ): Call<SearchResponse>
 }
