@@ -27,8 +27,9 @@ object SearchService {
 
         searchService.SearchSickName(userId, sickName, currentTime, body).enqueue(object : Callback<SearchResponse> {
             override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
-
+                Log.d("성공1","성공")
                 val resp = response.body()!!
+                Log.d("성공2","성공")
 
                 when(resp.code){
                     1000 -> searchSickNameView.onSearchSickNameSuccess(resp.result)
