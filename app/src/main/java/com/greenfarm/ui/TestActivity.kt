@@ -31,9 +31,9 @@ import com.greenfarm.data.entities.SearchSickNameResult
 import com.greenfarm.data.nearby.NearbyUser
 import com.greenfarm.data.nearby.NearbyUserResult
 import com.greenfarm.data.remote.Search.SearchService
-import com.greenfarm.databinding.ActivityGuideBinding.inflate
 import com.greenfarm.databinding.ActivityTestBinding
 import com.greenfarm.ui.guideLine.GuidelineActivity
+import com.greenfarm.ui.main.MainActivity
 import com.greenfarm.utils.getJwt
 import com.greenfarm.utils.getUserId
 import org.tensorflow.lite.examples.detection.env.Logger
@@ -68,6 +68,8 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
     var token : String? = null
 
     lateinit var binding: ActivityTestBinding
+
+    lateinit var phoneNumberDialog : PhoneNumberDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,7 +113,8 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
                 TF_OD_API_MODEL_FILE = "best-fp16-redbean.tflite"
                 TF_OD_API_LABELS_FILE = "file:///android_asset/red-bean-label.txt"
             } else if (intent.getStringExtra("class") == "bean") {
-                // 모델 필요
+                TF_OD_API_MODEL_FILE = "best-fp16_bean.tflite"
+                TF_OD_API_LABELS_FILE = "file:///android_asset/coco.txt"
             }
             sourceBitmap =
                 Utils.getBitmapFromAsset(this@TestActivity, intent.getStringExtra("image"))
@@ -148,6 +151,12 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
             sickInformation.add(searchSickNameResult)
             sickInformationRVAdapter.notifyDataSetChanged()
         }
+
+        binding.loginBt.setOnClickListener{
+            val intent= Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
 
@@ -178,7 +187,7 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 1.5f
         textPaint.textSize = 25f
-        textPaint.color = Color.BLUE
+        textPaint.color = Color.parseColor("#e701a4")
         textPaint.style = Paint.Style.FILL_AND_STROKE
         textPaint.isAntiAlias = false
         textPaint.alpha = 255
@@ -196,11 +205,11 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
                     if (location != null && result.confidence >= MINIMUM_CONFIDENCE_TF_OD_API) {
                         Log.d("title", result.title)
                         if (result.title == "Bacterial leaf spo") {
-                            paint.color = Color.RED
+                            paint.color = Color.parseColor("#ea0438")
                             name = "세균성점무늬병"
                             sickname = "Bacterial leaf spo"
                         } else if (result.title == "Powdery mildew2") {
-                            paint.color = Color.GREEN
+                            paint.color = Color.parseColor("#af30ea")
                             name = "흰가루병"
                             sickname = "Powdery mildew2"
                         } else {
@@ -224,15 +233,15 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
                     if (location != null && result.confidence >= MINIMUM_CONFIDENCE_TF_OD_API) {
                         Log.d("title", result.title)
                         if (result.title == "Rhizopus") {
-                            paint.color = Color.RED
+                            paint.color = Color.parseColor("#ea0438")
                             name = "리조푸스"
                             sickname = "Rhizopus"
                         } else if (result.title == "Bacterial leaf blight") {
-                            paint.color = Color.BLUE
+                            paint.color = Color.parseColor("#af30ea")
                             name = "잎마름병"
                             sickname = "Bacterial leaf blight"
                         } else if (result.title == "Powdery mildew1") {
-                            paint.color = Color.GREEN
+                            paint.color = Color.parseColor("#ea562b")
                             name = "흰가루병"
                             sickname = "Powdery mildew1"
                         } else {
@@ -249,9 +258,42 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
 
                     }
                 }
+                else if (intent.getStringExtra("class") == "bean") {
+                    if (location != null && result.confidence >= MINIMUM_CONFIDENCE_TF_OD_API) {
+                        Log.d("title", result.title)
+                        if (result.title == "Downy mildew") {
+                            paint.color = Color.parseColor("#ea0438")
+                            name = "노균병"
+                            sickname = "Downy mildew"
+                        }
+                        else if (result.title == "Bacterial pustule") {
+                            paint.color = Color.parseColor("#ea562b")
+                            name = "불마름병"
+                            sickname = "Bacterial pustule"
+                        }
+
+                        else {
+                            paint.color = Color.CYAN
+                        }
+                        diseaseNoti.add(name)
+                        disease.add(result.title)
+                        canvas.drawRect(location, paint)
+                        val labelString = if (!TextUtils.isEmpty(result.title)) String.format(
+                            "%.2f",
+                            100 * result.confidence,
+                        ) else String.format("%.2f", 100 * result.confidence)
+                        canvas.drawText("$labelString%", (location.left+location.right)/2, location.top, textPaint)
+
+                    }
+                }
             }
             Log.d("disease",disease.toString())
             val diseaseSetOuter = HashSet(disease)
+
+            if(diseaseSetOuter.contains("Powdery mildew2")){
+                phoneNumberDialog = PhoneNumberDialog(this)
+                phoneNumberDialog.show()
+            }
 
             saveBitmapAsPNGFile(bitmap)
 
@@ -341,8 +383,8 @@ class TestActivity : AppCompatActivity(), SearchSickNameView {
     }
 
     companion object {
-        const val MINIMUM_CONFIDENCE_TF_OD_API = 0.2f
-        private var TF_OD_API_MODEL_FILE = "best-fp16-sesame-m.tflite"
+        const val MINIMUM_CONFIDENCE_TF_OD_API = 0.5f
+        private var TF_OD_API_MODEL_FILE = "best-fp16_bean.tflite"
         private var TF_OD_API_LABELS_FILE = "file:///android_asset/coco.txt"
         private val LOGGER = Logger()
         const val TF_OD_API_INPUT_SIZE = 640

@@ -53,7 +53,7 @@ class SignUpActivity: BaseActivity<ActivitySignupBinding>(ActivitySignupBinding:
     override fun onSignUpLoading() {}
 
     override fun onSignUpSuccess() {
-        Toast.makeText(this@SignUpActivity, "성공", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@SignUpActivity, "회원가입에 성공하였습니다.", Toast.LENGTH_SHORT).show()
         finish()
     }
 

@@ -38,28 +38,38 @@
         <entry key="..\:/Users/gypig/Documents/COLLECTION/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/gypig/Documents/COLLECTION/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-xxhdpi/test_radius.xml" value="0.129" />
+        <entry key="app/src/main/res/drawable/goto_first_btn_event.xml" value="0.144" />
         <entry key="app/src/main/res/drawable/history_radius.xml" value="0.129" />
+        <entry key="app/src/main/res/drawable/phone_background.xml" value="0.144" />
         <entry key="app/src/main/res/drawable/radio_normal.xml" value="0.129" />
+        <entry key="app/src/main/res/drawable/radio_normal2.xml" value="0.144" />
         <entry key="app/src/main/res/drawable/radio_selected.xml" value="0.129" />
+        <entry key="app/src/main/res/drawable/radio_selected2.xml" value="0.144" />
         <entry key="app/src/main/res/drawable/radio_selector.xml" value="0.129" />
+        <entry key="app/src/main/res/drawable/radio_selector2.xml" value="0.144" />
         <entry key="app/src/main/res/drawable/radio_selector_bean.xml" value="0.129" />
         <entry key="app/src/main/res/drawable/radio_selector_redbean.xml" value="0.129" />
         <entry key="app/src/main/res/drawable/radio_selector_sesame.xml" value="0.129" />
+        <entry key="app/src/main/res/drawable/radius.xml" value="0.144" />
+        <entry key="app/src/main/res/drawable/radius_white.xml" value="0.144" />
         <entry key="app/src/main/res/drawable/selector_radio_text.xml" value="0.129" />
-        <entry key="app/src/main/res/layout/activity_guide.xml" value="0.17819274902343743" />
+        <entry key="app/src/main/res/drawable/selector_radio_text2.xml" value="0.144" />
+        <entry key="app/src/main/res/layout/activity_guide.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_history.xml" value="0.23818817138671874" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_search.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.24444444444444444" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/dialog_phonenumber.xml" value="0.21141662597656252" />
         <entry key="app/src/main/res/layout/fragment_match.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/fragment_month.xml" value="0.10989583333333333" />
         <entry key="app/src/main/res/layout/fragment_week.xml" value="0.10989583333333333" />
         <entry key="app/src/main/res/layout/item_history_box.xml" value="0.25688629150390635" />
         <entry key="app/src/main/res/layout/item_test_result.xml" value="0.1" />
         <entry key="app/src/main/res/menu/navi_menu.xml" value="0.10989583333333333" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.108" />
         <entry key="app/src/main/res/xml/file_paths.xml" value="0.1" />
       </map>
     </option>

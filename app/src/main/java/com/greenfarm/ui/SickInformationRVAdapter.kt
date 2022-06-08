@@ -43,20 +43,33 @@ class SickInformationRVAdapter(var informationlist : ArrayList<SearchSickNameRes
                     text = searchSicknameResult.sickNameKor
                 }
                 if (searchSicknameResult.sickNameKor == "세균성점무늬병"){
-                    setTextColor(Color.RED)
+                    setTextColor(Color.parseColor("#ea0438"))
                 }
                 else if (searchSicknameResult.sickNameKor == "흰가루병"){
-                    setTextColor(Color.GREEN)
+                    setTextColor(Color.parseColor("#af30ea"))
                 }
+
+
                 else if (searchSicknameResult.sickNameKor == "리조푸스"){
-                    setTextColor(Color.RED)
+                    setTextColor(Color.parseColor("#ea0438"))
                 }
                 else if (searchSicknameResult.sickNameKor == "잎마름병"){
-                    setTextColor(Color.BLUE)
+                    setTextColor(Color.parseColor("#af30ea"))
                 }
                 else if (searchSicknameResult.sickNameKor == "Powdery mildew1"){
-                    setTextColor(Color.GREEN)
+                    setTextColor(Color.parseColor("#ea562b"))
                 }
+
+
+
+                else if (searchSicknameResult.sickNameKor == "노균병"){
+                    setTextColor(Color.parseColor("#ea0438"))
+                }
+                else if (searchSicknameResult.sickNameKor == "불마름병"){
+                    setTextColor(Color.parseColor("#ea562b"))
+                }
+
+
                 else {
                     setTextColor(Color.CYAN)
                 }
@@ -103,6 +116,9 @@ class SickInformationRVAdapter(var informationlist : ArrayList<SearchSickNameRes
                     text = "해당 정보가 존재하지 않습니다."
                 }
                 else if(searchSicknameResult.infectionRoute == "null"){
+                    text = "해당 정보가 존재하지 않습니다."
+                }
+                else if(searchSicknameResult.infectionRoute == ""){
                     text = "해당 정보가 존재하지 않습니다."
                 }
                 else {

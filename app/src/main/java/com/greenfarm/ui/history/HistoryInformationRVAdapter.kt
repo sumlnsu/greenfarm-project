@@ -65,9 +65,9 @@ class HistoryInformationRVAdapter(var informationlist : ArrayList<HistoryResult>
                 binding.historyBoxSesameIv.visibility=View.INVISIBLE
             }
             else {
-                binding.historyBoxBeanIv.visibility=View.VISIBLE
+                binding.historyBoxBeanIv.visibility=View.INVISIBLE
                 binding.historyBoxRedbeanIv.visibility=View.INVISIBLE
-                binding.historyBoxSesameIv.visibility=View.INVISIBLE
+                binding.historyBoxSesameIv.visibility=View.VISIBLE
             }
 
             binding.historyBoxTimeTv.apply {

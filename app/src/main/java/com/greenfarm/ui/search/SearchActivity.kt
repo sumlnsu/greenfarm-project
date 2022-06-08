@@ -21,7 +21,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.greenfarm.R
-import com.greenfarm.databinding.ActivityMainBinding
 import com.greenfarm.databinding.ActivitySearchBinding
 import com.greenfarm.ui.BaseActivity
 import com.greenfarm.ui.TestActivity
@@ -92,7 +91,7 @@ class SearchActivity: BaseActivity<ActivitySearchBinding>(ActivitySearchBinding:
 
 
         // 병해충 검출 시작 클릭
-        binding.uploadStartTv.setOnClickListener{
+        binding.historyBoxLayout.setOnClickListener{
             Log.d("start","start")
             if(isImageUploaded){
                 var userId = intent.getStringExtra("user-id").toString()

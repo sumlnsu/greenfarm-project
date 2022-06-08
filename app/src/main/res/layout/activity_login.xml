@@ -6,141 +6,152 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/login_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/iv_greenfarm_login"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="160dp"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/login_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/login_id_hint"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@+id/login_logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="51dp"
-        android:layout_marginLeft="34dp"
-        android:layout_marginRight="34dp"
-        android:textColorHint="@color/grey_green"
-        android:background="@null"
-        android:autofillHints="@null"
-        />
+        <ImageView
+            android:id="@+id/login_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/iv_greenfarm_login"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="34dp"
+            android:layout_marginTop="220dp"
+            />
 
-
-    <View
-        android:id="@+id/login_id_underscore"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        app:layout_constraintTop_toBottomOf="@+id/login_id"
-        android:layout_marginTop="6dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginEnd="34dp"
-        android:background="@color/black"
-        />
+        <EditText
+            android:id="@+id/login_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/login_id_hint"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/login_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="51dp"
+            android:layout_marginLeft="34dp"
+            android:layout_marginRight="34dp"
+            android:textColorHint="@color/grey_green"
+            android:background="@null"
+            android:autofillHints="@null"
+            />
 
 
-    <TextView
-        android:id="@+id/login_id_error"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginTop="5dp"
-        android:text="*비밀번호를 다시 확인해주세요"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_id_underscore"
-        android:textColor="@color/error_red"
-        android:visibility="gone"
-        />
+        <View
+            android:id="@+id/login_id_underscore"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@+id/login_id"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="34dp"
+            android:layout_marginEnd="34dp"
+            android:background="@color/black"
+            />
 
-    <EditText
-        android:id="@+id/login_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/login_password_hint"
-        android:autofillHints="@null"
-        android:inputType="textPassword"
-        android:layout_marginTop="31dp"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@+id/login_id_error"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="34dp"
-        android:layout_marginEnd="34dp"
-        android:textColorHint="@color/grey_green"
-        android:background="@null"
-        />
 
-    <View
-        android:id="@+id/login_password_underscore"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        app:layout_constraintTop_toBottomOf="@+id/login_password"
-        android:layout_marginTop="6dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginEnd="34dp"
-        android:background="@color/black"
-        />
+        <TextView
+            android:id="@+id/login_id_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="34dp"
+            android:layout_marginEnd="34dp"
+            android:layout_marginTop="5dp"
+            android:text="*비밀번호를 다시 확인해주세요"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_id_underscore"
+            android:textColor="@color/error_red"
+            android:visibility="gone"
+            />
 
-    <TextView
-        android:id="@+id/login_password_error"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginTop="5dp"
-        android:text="*비밀번호가 잘못되었습니다."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_password_underscore"
-        android:textColor="@color/error_red"
-        android:visibility="gone"
-        />
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_password_hint"
+            android:autofillHints="@null"
+            android:inputType="textPassword"
+            android:layout_marginTop="31dp"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/login_id_error"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="34dp"
+            android:layout_marginEnd="34dp"
+            android:textColorHint="@color/grey_green"
+            android:background="@null"
+            />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login_bt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/login_password_error"
-        android:layout_marginTop="80dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginEnd="34dp"
-        android:background="@drawable/radius"
-        android:backgroundTint="@color/dark_green"
-        android:text="@string/login"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        <View
+            android:id="@+id/login_password_underscore"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@+id/login_password"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="34dp"
+            android:layout_marginEnd="34dp"
+            android:background="@color/black"
+            />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login_sign_up_bt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/login_bt"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginEnd="34dp"
-        android:background="@drawable/radius"
-        android:text="@string/signup"
-        android:textStyle="bold"
-        android:textColor="@color/dark_green"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        <TextView
+            android:id="@+id/login_password_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="34dp"
+            android:layout_marginEnd="34dp"
+            android:layout_marginTop="5dp"
+            android:text="*비밀번호가 잘못되었습니다."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_password_underscore"
+            android:textColor="@color/error_red"
+            android:visibility="gone"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/login_password_error"
+            android:layout_marginTop="80dp"
+            android:layout_marginStart="34dp"
+            android:layout_marginEnd="34dp"
+            android:background="@drawable/radius"
+            android:backgroundTint="@color/dark_green"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login_sign_up_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/login_bt"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="34dp"
+            android:layout_marginEnd="34dp"
+            android:background="@drawable/radius"
+            android:text="@string/signup"
+            android:textStyle="bold"
+            android:textColor="@color/dark_green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/login_loading_pb"
